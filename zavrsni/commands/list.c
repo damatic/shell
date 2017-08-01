@@ -16,6 +16,7 @@ int main(int argc, char* argv[])
 	if(argc == 1){ // u slucaju da nema argumenta poslije ls
 		argv[1] = ".";
 	}
+	printf("Broj argumenata: %d\n", argc);
 	
     mydir = opendir(argv[1]);
     
@@ -55,4 +56,3 @@ int main(int argc, char* argv[])
     
 	return 0;
 }
-
