@@ -21,13 +21,10 @@ int main(int argc, char* argv[])
     mydir = opendir(argv[1]);
     
     
-    while((myfile = readdir(mydir)) != NULL)
-    {
+    while((myfile = readdir(mydir)) != NULL){
     	if(myfile->d_name[0] != '.'){
 			sprintf(buf, "%s/%s", argv[1], myfile->d_name);
 		    stat(buf, &mystat);
-		    
-		    
 		    
 		    // dozvole nad datotekama
 		    //printf("%o\t", mystat.st_mode & S_IWGRP);		    
