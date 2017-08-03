@@ -33,7 +33,7 @@ int copyFile(char* src_file, char* dest_file) // kopiranje datoteka
 	size_t read_size, write_size;
 	unsigned char buff[8192];
 	
-	fd_src = fopen(src_file, "rb");
+	fd_src = fopen(src_file, "rb"); 
 	if(fd_src == NULL){
 		perror("file open for reading");
 		return EXIT_FAILURE;
@@ -48,12 +48,12 @@ int copyFile(char* src_file, char* dest_file) // kopiranje datoteka
 	
 	
 	do {
-    	read_size = fread(buff, 1, sizeof(buff), fd_src);
+    	read_size = fread(buff, 1, sizeof(buff), fd_src); // citanje datoteke
     	if (read_size != 0) 
-    		write_size = fwrite(buff, 1, read_size, fd_dest);
+    		write_size = fwrite(buff, 1, read_size, fd_dest); // pisanje u datoteku
     	else   
     		write_size = 0;
-	} while ((read_size > 0) && (read_size == write_size));
+	} while ((read_size > 0) && (read_size == write_size)); 
 	
 	if (write_size != 0) 
 		perror("copy");
@@ -102,7 +102,7 @@ int main(int argc, char* argv[])
 				printf("BUFFER: %s\n", buffer);
 				copyFile(argv[1], buffer);
 			}
-		}else if((stbuf1.st_mode & S_IFMT) == S_IFDIR){
+		}else if((stbuf1.st_mode & S_IFMT) == S_IFDIR){ // ako je direktorij
 			copyDirectory(argv[1], argv[2]);
 		}else{
 			print_error(argv[0], argv[1], argv[2]);
