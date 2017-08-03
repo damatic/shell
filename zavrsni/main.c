@@ -7,7 +7,7 @@
 #include <sys/wait.h>
 #include <errno.h>
 
-#define BUFFER_LENGTH 1024
+#define BUFFER_LENGTH 1024 // velicina buffera
 
 int main()
 {	
@@ -21,47 +21,39 @@ int main()
 	int argc = 0;
 	size_t length;
 	
+	//dodati cd, clear, pwd...
 	while(1){
 		strcpy(program_path, path);
 	
 		printf("test >> ");
 
-		if (fgets(line, BUFFER_LENGTH, stdin) == 0){
+		if (fgets(line, BUFFER_LENGTH, stdin) == 0){ // u slucaju da je ^D End-Of-File
 			return 1;
 		}
+		
 		if (line[0] == '\n') { // prazna komanda
 			printf("empty command!!!\n");
-    		continue;
   		}else{
   			length = strlen(line);
   			
-			if (line[length - 1] == '\n'){
+			if (line[length - 1] == '\n'){ // brise oznaku za novi red
 				line[length - 1] = '\0';
 			}		
 		
-	  		if(strcmp(line, "exit") == 0){ // u slucaju da je exit
+	  		if(strcmp(line, "exit") == 0){ // probno exit
 		    	return 1;
 			}
 
-			token = strtok(line, " ");
+			token = strtok(line, " \n\t()<>|&;");
 			while(token != NULL && i < 256){
 				argv[i] = token;
-				token = strtok(NULL, " \n\t()<>|&;");
+				token = strtok(NULL, " \n\t()<>|&;"); // " \n\t()<>|&;" znakovi koje "ignorira"
 				i++;
 			}
 			
-			argv[i] == NULL;
-			printf("Prije: %s\n", program_path);
-			strcat(program_path, argv[0]);
-			printf("Poslije: %s\n", program_path);
-			
-			//printf("%s\n", program_path); // ispis putanje programa
-			
 			argc = i;
-
-			/*for(i = 0; i < argc; i++){ // ispis argumenata
-				printf("%s\n", argv[i]);
-			}*/
+			argv[i] == NULL; // potrebno zbog execvp, da se zna gdje je kraj
+			strcat(program_path, argv[0]); // spajanje putanje programa
 			
 			pid = fork();
 			if(pid == 0){ // child process
@@ -73,8 +65,6 @@ int main()
                 }
 			}else{ // parrent process
 				wait(NULL);
-		    	
-		    	//program_path[PATH_MAX] = "/home/stingy/Desktop/zavrsni/commands/";
 		    	// postavljanje svih varijabli na pocetno stanje
 		    	argv[0] = 0;
 		    	line[0] = '\0';
@@ -84,10 +74,10 @@ int main()
 				//printf("Child exited\n");
 			}
 		}
-		//printf("%s\n", program_path);
 	}
-	return EXIT_SUCCESS;
+	return 0;
 }
+
 
 
 
