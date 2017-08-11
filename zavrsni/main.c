@@ -69,7 +69,7 @@ int main()
 			}		
 		
 	  		if(strcmp(line, "exit") == 0){ // probno exit
-		    	exitshell();
+		    	exit_shell();
 			}
 			
 			if(strcmp(line, "clear") == 0){ // probno clear
