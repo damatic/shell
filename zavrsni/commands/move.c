@@ -12,7 +12,7 @@ void print_error(char *this, char *filename1, char *filename2)
 	fprintf(stderr, "%s: cannot move '%s' to '%s'\n"
 	"error: %s\n", this, filename1, filename2, strerror(errno));
 	
-	exit(EXIT_FAILURE);
+	exit(-1);
 }
 
 void print_usage(char *this)
@@ -20,7 +20,7 @@ void print_usage(char *this)
 	fprintf(stderr, "SYNTAX ERROR: \n"
 	"USAGE %s [filename1] [filename2]\n", this);
 	
-	exit(EXIT_FAILURE);
+	exit(-1);
 }
 
 int main(int argc, char* argv[])
@@ -32,14 +32,21 @@ int main(int argc, char* argv[])
 	if(argc == 3){
 		if(rename(argv[1], argv[2]) == -1) {
 			print_error(argv[0], argv[1], argv[2]);
-			return EXIT_FAILURE;
+			return -1;
 		}
-	}
-	else{
+	}else{
 		print_usage(argv[0]);
-		return EXIT_FAILURE;
+		return -1;
 	}
     
     
 	return 0;
 }
+
+
+
+
+
+
+
+
