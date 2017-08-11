@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <dirent.h>
+#include <time.h>
 
 int main(int argc, char* argv[])
 {
@@ -13,13 +14,14 @@ int main(int argc, char* argv[])
     struct stat mystat;
 	char buf[512];
 	
-	if(argc == 1){ // u slucaju da nema argumenta poslije ls
+	
+	if(argv[1] == NULL){ // u slucaju da nema argumenta poslije ls
 		argv[1] = ".";
 	}
-	printf("Broj argumenata: %d\n", argc);
+		
+	//printf("Broj argumenata: %d, %s %s\n", argc, argv[0], argv[1]);
 	
     mydir = opendir(argv[1]);
-    
     
     while((myfile = readdir(mydir)) != NULL){
     	if(myfile->d_name[0] != '.'){
@@ -38,18 +40,25 @@ int main(int argc, char* argv[])
 		    printf( (mystat.st_mode & S_IWOTH) ? "w" : "-");
 		    printf( (mystat.st_mode & S_IXOTH) ? "x" : "-");
 		    
+		    printf(" %ld ", mystat.st_nlink); // broj veza
+		    
+		    printf("%u ", mystat.st_uid); // ID of the owner of the file
+		    
+		    printf("%u ", mystat.st_gid); // ID of the group owner of the file
+		    
 		    // velicina datoteke
-		    printf("\t%ld",mystat.st_size);
+		    printf("%ld ",mystat.st_size);
 		    
 		    // vrijeme zadnje promjene
-		    printf("\t%ld", mystat.st_atime);
+		    printf("%s ", ctime(&mystat.st_atime));
 		    
 		    // ime datoteke
-		    printf("\t%s\n", myfile->d_name);
+		    printf("%s\n", myfile->d_name);
         }
     }
     
     closedir(mydir);
+    // printf("list exited\n");
     
 	return 0;
 }
