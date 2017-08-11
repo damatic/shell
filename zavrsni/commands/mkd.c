@@ -34,8 +34,7 @@ int main(int argc, char* argv[])
 			print_error(argv[0], argv[1]);
 			return EXIT_FAILURE;
 		}
-	}
-	else{
+	}else{
 		print_usage(argv[0]);
 		return EXIT_FAILURE;
 	}
@@ -43,3 +42,16 @@ int main(int argc, char* argv[])
     
 	return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
