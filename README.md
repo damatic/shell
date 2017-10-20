@@ -1,3 +1,3 @@
 # zavrsni-linux-shell
 
-Zavrsni rad u tijeku...
+Linux ljuska u pokušaju.
