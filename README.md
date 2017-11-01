@@ -9,7 +9,6 @@ početnom "folderu" i u commands "folderu" s naredbom 'make all'. Izvorni kod se
 koje omogućuje "hvatanje" svih upozorenja i greški nastalih pri "kompajliranju".
 
 Ljuska trenutno ima 8 vlastitih programa koje može izvršiti a to su:
-
 - cat - ispis datoteke na ekran
 - chmod - promjena prava pristupa datotekama i direktorijima
 - copy - kopiranje datoteka ("u izradi rekurzivno kopiranje direktorija koji nije prazan")
@@ -24,9 +23,9 @@ Ljuska trenutno ima 8 vlastitih programa koje može izvršiti a to su:
 pipe - u izradi...
 
 U izradi su i sljedeći programi i dodaci:
-history -  spremanje naredbi u datoteku
-kill - ubijanje procesa
-list process - listanj trenutnih procesa
-background process - stavljanje procesa u pozadinu
-smart completion - nekakav način za pametno završavanje imena datoteka, direktorija...
+- history -  spremanje naredbi u datoteku
+- kill - ubijanje procesa
+- list process - listanj trenutnih procesa
+- background process - stavljanje procesa u pozadinu
+- smart completion - nekakav način za pametno završavanje imena datoteka, direktorija...
 
