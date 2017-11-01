@@ -1,1 +1,3 @@
 # shell
+
+Ljuska u pokusaju...
