@@ -1,6 +1,6 @@
 # Ljuska u pokusaju...
 
-Projekt za završni rad na fakultetu u Splitu, točnije Sveučilišni odjel za stručne studije.
+Projekt za završni rad na fakultetu.
 
 Programira se u C programskom jeziku, copile se izvodi s gcc.
 
