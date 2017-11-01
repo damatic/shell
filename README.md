@@ -9,7 +9,7 @@ početnom "folderu" i u commands "folderu" s naredbom 'make all'. Izvorni kod se
 koje omogućuje "hvatanje" svih upozorenja i greški nastalih pri "kompajliranju".
 
 Ljuska trenutno ima 8 vlastitih programa koje može izvršiti a to su:
-'''
+```
 cat - ispis datoteke na ekran
 chmod - promjena prava pristupa datotekama i direktorijima
 copy - kopiranje datoteka ("u izradi rekurzivno kopiranje direktorija koji nije prazan")
@@ -18,7 +18,7 @@ mkd - stvaranje novog direktorija
 move - premještanje direktorija na neko drugo mjesto
 rm - brisanje datoteka ("u izradi rekurzivno brisanje skupa datoteka")
 wc - ispis znakova/riječi/linija neke datoteke
-'''
+```
 
 
 pipe - u izradi...
