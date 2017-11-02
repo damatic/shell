@@ -37,33 +37,33 @@ int brisanje_direktorija(char* path) // za prazne direktorije
 int main(int argc, char* argv[])
 {
 	int c;
-	FILE *file;
-	struct stat stbuf1;
+	/*FILE *file;
+	struct stat stbuf1;*/
 	int count = 0;
 	char word[128];
+	char input[4096];
 	
 	if(argv[1][0] != '-'){
 		print_usage(argv[0]);
 	}
 	
-	if(stat(argv[2], &stbuf1) == -1){ // ako datoteka za citanje ne postoji
+	/*if(stat(argv[2], &stbuf1) == -1){ // ako datoteka za citanje ne postoji
 		print_error(argv[0], argv[2]);
 		return EXIT_FAILURE;
 	}
 	
-	
-	file = fopen(argv[0], "r");
+	file = fopen(argv[2], "r");
 	
 	if (file == NULL) {
 		printf("File cannot be opened\n");
 		return EXIT_FAILURE;
-	}
+	}*/
 
 	if(strcmp(argv[1], "-c") == 0){
-		while ((c = getc(file)) != EOF)
-		if(c != ' ' || c != '\n' || c != '\t')
-			count++;
-		
+		while ((c = getc(stdout)) != 0){
+			if(c != ' ' || c != '\n' || c != '\t')
+				count++;
+		}
 		printf("Broj znakova u datoteci je: %d\n", count);
 	}
 	
@@ -71,21 +71,23 @@ int main(int argc, char* argv[])
 		/*while ((c = getc(file)) != EOF)
 			if(c == ' ' || c == '\n')*/
 		
-		while (fscanf(file, "%s", word) == 1)
+		while(fgets(input, sizeof(input), stdin)){
+			sscanf(input, "%s", word);
 			count++;
-		
+		}
+
 		printf("Broj \"rijeci\" u datoteci je: %d\n", count);
 	}
 	
 	if(strcmp(argv[1], "-l") == 0){
-		while ((c = getc(file)) != EOF)
-		if(c == '\n')
-			count++;
-		
+		while ((c = getc(stdout)) != EOF){
+			if(c == '\n')
+				count++;
+		}
 		printf("Broj linija u datoteci je: %d\n", count);
 	}
 
-	fclose(file);
+	//fclose(file);
 	
 	return 0;
 }

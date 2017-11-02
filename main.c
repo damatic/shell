@@ -25,6 +25,8 @@
 #define ARGUMENT_SIZE 50
 //  strsep(“|”)
 
+
+// pipe radi, oba programa odrade posao, problem je kod citanja izlaza, ne postoji EOF
 void execArgsPiped(char* parsed[], char* parsedpipe[])
 {
 	// execlp("cat", "cat", "builtin.h", NULL)
@@ -52,7 +54,7 @@ void execArgsPiped(char* parsed[], char* parsedpipe[])
     if (pid1 == 0) {
         printf("First child is writing to pipe...\n");
 		close(pipefd[0]);
-        dup2(pipefd[1], STDOUT_FILENO); // wc reads from the pipe
+        dup2(pipefd[1], STDOUT_FILENO);
         close(pipefd[1]);
         
 		strcat(program_path, parsed[0]);
@@ -62,7 +64,7 @@ void execArgsPiped(char* parsed[], char* parsedpipe[])
         }
 		
     } else {
-		waitpid(pid1, &first_child_status, 0); // cekanje da zavrsi prvo dijete
+		wait(&first_child_status); // cekanje da zavrsi prvo dijete
 
 		/*if (WIFEXITED(first_child_status) == 0)
 			printf("exit status = %d\n", WEXITSTATUS(first_child_status));*/
@@ -71,7 +73,7 @@ void execArgsPiped(char* parsed[], char* parsedpipe[])
 			printf("\nfork() failed\n");
 			return;
 		}
-			
+		
 		if(pid2 == 0){
 			printf("Second child is reading from pipe...\n");
 			close(pipefd[1]);
@@ -84,7 +86,7 @@ void execArgsPiped(char* parsed[], char* parsedpipe[])
 				exit(1);
 			}
 		}
-		waitpid(pid2, &second_child_status, 0);
+		wait(&second_child_status);
 	}
 }
 
@@ -157,7 +159,7 @@ int main()
 			
 			if(strcmp(line, "pipe\n") == 0){
 				char* argpipe1[1024] = { "cat", "builtin.h", NULL };
-				char* argpipe2[1024] = { "wc", "-w", NULL };
+				char* argpipe2[1024] = { "wc", "-c", NULL};
 				
 				execArgsPiped(argpipe1, argpipe2);
 
