@@ -19,12 +19,40 @@
 #include <sys/wait.h>
 #include <errno.h>
 #include "builtin.h"
-#include <fcntl.h> // dup2
 
 #define BUFFER_LENGTH 1024 // velicina buffera
 #define BUFFER_SIZE_FOR_NAMES 124
 #define ARGUMENT_SIZE 50
 //  strsep(“|”)
+
+/*void execArgsPiped(char* parsed[], char* parsedpipe[]) 
+{
+    int fd[2];
+	char program_path[PATH_MAX] = "/home/matic/shell/commands/";
+	
+    pipe(fd);
+
+    if (fork()) {
+        // Child process
+        dup2(fd[0], 0); // wc reads from the pipe
+        close(fd[0]);
+        close(fd[1]);
+		
+		strcat(program_path, parsedpipe[0]);
+        execvp(program_path, parsedpipe);
+    } else {
+		if(fork()){
+			// Parent process
+			dup2(fd[1], 1); // grep writes to the pipe
+			close(fd[0]);
+			close(fd[1]);
+			
+			strcat(program_path, parsed[0]);
+			execvp(program_path, parsed);
+		}
+    }
+    exit(EXIT_FAILURE);
+}*/
 
 void execArgsPiped(char* parsed[], char* parsedpipe[])
 {
@@ -33,10 +61,12 @@ void execArgsPiped(char* parsed[], char* parsedpipe[])
 	// execvp(program_path, parsed)
 	// execvp(program_path, parsedpipe)
 	
-	int first_child_status, second_child_status;
+	//int first_child_status;
+	//int second_child_status;
+	//int extstatus;
     int pipefd[2];
     pid_t pid1, pid2;
-	char program_path[PATH_MAX] = "/home/matic/shell/commands/";
+	char program_path[PATH_MAX] = "/home/matic/shell/commands/"; // potrebno upisati trenutnu putanju!!!
 	
     if (pipe(pipefd) < 0) {
         printf("\nPipe could not be initialized!\n");
@@ -50,43 +80,43 @@ void execArgsPiped(char* parsed[], char* parsedpipe[])
 
     if (pid1 == 0) {
         printf("First child is writing to pipe...\n");
+        dup2(pipefd[0], 0); // wc reads from the pipe
         close(pipefd[0]);
-        dup2(pipefd[1], STDOUT_FILENO);
-		close(pipefd[1]);
+        close(pipefd[1]);
 		
-		printf("First child fd done...\n");
-		strcat(program_path, parsed[0]);
-		printf("%s %s\n" , program_path, parsed[0]);
+        execlp("wc", "wc", "-l", NULL);
         if (execvp(program_path, parsed) < 0) {
             printf("\nCould not execute command 1..\n");
             exit(1);
         }
 		
     } else {
-		wait(&first_child_status); // cekanje da zavrsi pvo dijete
+		//wait(&first_child_status); // cekanje da zavrsi prvo dijete
 
+		if (WIFEXITED(first_child_status) == 0)
+			printf("exit status = %d\n", WEXITSTATUS(first_child_status));
+		
 		if ((pid2 = fork()) == -1) { // drugi put fork(), iz istog roditelja
 			printf("\nfork() failed\n");
 			return;
 		}
-		
+			
 		if(pid2 == 0){
 			printf("Second child is reading from pipe...\n");
-			close(pipefd[1]);
-			dup2(pipefd[0], STDIN_FILENO);
+			dup2(pipefd[1], 1); // grep writes to the pipe
 			close(pipefd[0]);
-
+			close(pipefd[1]);
+			execlp("cat", "cat", "builtin.h", NULL);
 			strcat(program_path, parsedpipe[0]);
-			printf("%s %s\n" , program_path, parsedpipe[0]);
+			
 			if (execvp(program_path, parsedpipe) < 0) {
 				printf("\nCould not execute command 2..\n");
 				exit(1);
 			}
 		}
-		wait(&second_child_status);
-		printf("DRUGO DIJETE ZAVRSILO!\n");
+		
 	}
-	
+	//wait(&second_child_status);
 }
 
 int check_builtin(char *line)
@@ -157,10 +187,8 @@ int main()
 			}
 			
 			if(strcmp(line, "pipe\n") == 0){
-				char* argpipe1[1024] = { "cat", "builtin.h" };
-				char* argpipe2[1024] = { "wc", "-w" };
-				argpipe1[2] = NULL;
-				argpipe2[2] = NULL;
+				char* argpipe1[1024] = { "cat", "builtin.h", NULL };
+				char* argpipe2[1024] = { "wc", "-w", NULL };
 				
 				execArgsPiped(argpipe1, argpipe2);
 

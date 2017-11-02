@@ -55,7 +55,6 @@ int main(int argc, char* argv[])
 	file = fopen(argv[2], "r");
 	printf("File does not exist\n");
 	if (file == NULL) {
-		printf("File does not exist\n");
 		return EXIT_FAILURE;
 	}
 
