@@ -52,9 +52,10 @@ int main(int argc, char* argv[])
 	}
 	
 	
-	file = fopen(argv[2], "r");
-	printf("File does not exist\n");
+	file = fopen(argv[0], "r");
+	
 	if (file == NULL) {
+		printf("File cannot be opened\n");
 		return EXIT_FAILURE;
 	}
 

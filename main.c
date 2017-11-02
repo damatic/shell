@@ -25,35 +25,6 @@
 #define ARGUMENT_SIZE 50
 //  strsep(“|”)
 
-/*void execArgsPiped(char* parsed[], char* parsedpipe[]) 
-{
-    int fd[2];
-	char program_path[PATH_MAX] = "/home/matic/shell/commands/";
-	
-    pipe(fd);
-
-    if (fork()) {
-        // Child process
-        dup2(fd[0], 0); // wc reads from the pipe
-        close(fd[0]);
-        close(fd[1]);
-		
-		strcat(program_path, parsedpipe[0]);
-        execvp(program_path, parsedpipe);
-    } else {
-		if(fork()){
-			// Parent process
-			dup2(fd[1], 1); // grep writes to the pipe
-			close(fd[0]);
-			close(fd[1]);
-			
-			strcat(program_path, parsed[0]);
-			execvp(program_path, parsed);
-		}
-    }
-    exit(EXIT_FAILURE);
-}*/
-
 void execArgsPiped(char* parsed[], char* parsedpipe[])
 {
 	// execlp("cat", "cat", "builtin.h", NULL)
@@ -61,8 +32,8 @@ void execArgsPiped(char* parsed[], char* parsedpipe[])
 	// execvp(program_path, parsed)
 	// execvp(program_path, parsedpipe)
 	
-	//int first_child_status;
-	//int second_child_status;
+	int first_child_status;
+	int second_child_status;
 	//int extstatus;
     int pipefd[2];
     pid_t pid1, pid2;
@@ -80,21 +51,21 @@ void execArgsPiped(char* parsed[], char* parsedpipe[])
 
     if (pid1 == 0) {
         printf("First child is writing to pipe...\n");
-        dup2(pipefd[0], 0); // wc reads from the pipe
-        close(pipefd[0]);
+		close(pipefd[0]);
+        dup2(pipefd[1], STDOUT_FILENO); // wc reads from the pipe
         close(pipefd[1]);
-		
-        execlp("wc", "wc", "-l", NULL);
+        
+		strcat(program_path, parsed[0]);
         if (execvp(program_path, parsed) < 0) {
             printf("\nCould not execute command 1..\n");
             exit(1);
         }
 		
     } else {
-		//wait(&first_child_status); // cekanje da zavrsi prvo dijete
+		waitpid(pid1, &first_child_status, 0); // cekanje da zavrsi prvo dijete
 
-		if (WIFEXITED(first_child_status) == 0)
-			printf("exit status = %d\n", WEXITSTATUS(first_child_status));
+		/*if (WIFEXITED(first_child_status) == 0)
+			printf("exit status = %d\n", WEXITSTATUS(first_child_status));*/
 		
 		if ((pid2 = fork()) == -1) { // drugi put fork(), iz istog roditelja
 			printf("\nfork() failed\n");
@@ -103,20 +74,18 @@ void execArgsPiped(char* parsed[], char* parsedpipe[])
 			
 		if(pid2 == 0){
 			printf("Second child is reading from pipe...\n");
-			dup2(pipefd[1], 1); // grep writes to the pipe
-			close(pipefd[0]);
 			close(pipefd[1]);
-			execlp("cat", "cat", "builtin.h", NULL);
-			strcat(program_path, parsedpipe[0]);
+			dup2(pipefd[0], STDIN_FILENO);
+			close(pipefd[0]);
 			
+			strcat(program_path, parsedpipe[0]);
 			if (execvp(program_path, parsedpipe) < 0) {
 				printf("\nCould not execute command 2..\n");
 				exit(1);
 			}
 		}
-		
+		waitpid(pid2, &second_child_status, 0);
 	}
-	//wait(&second_child_status);
 }
 
 int check_builtin(char *line)
