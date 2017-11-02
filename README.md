@@ -6,7 +6,7 @@ Programira se u C programskom jeziku, compile se izvodi s gcc, a debug s gdb.
 
 Program je u cijelosti "kompajliran". Ako bi se program na novo "kompajlirao" te bio spreman za pokretanje, potrebno je pokrenuti make file na dva mjesta,
 početnom "folderu" i u commands "folderu" s naredbom 'make clean', te zatim s naredbom 'make all'. Izvorni kod se "kompajlira" s argumentom -Wall,
-koje omogućuje "hvatanje" svih upozorenja i greški nastalih pri "kompajliranju".
+koje omogućuje "hvatanje" svih upozorenja i greški nastalih pri "kompajliranju". Potrebno je također promijeniti varijablu 'program_path' u main.c i postaviti na trenutnu putanju programa.
 
 Ljuska trenutno ima 8 vlastitih programa koje može izvršiti a to su:
 - cat - ispis datoteke na ekran

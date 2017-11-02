@@ -125,9 +125,9 @@ int check_builtin(char *line)
 }
 
 int main()
-{	
+{
 	pid_t pid;
-	char program_path[PATH_MAX] = "/home/matic/shell/commands/";
+	char program_path[PATH_MAX] = "/home/matic/shell/commands/"; // korisnik postaviti svoju putanju!!!!
 	char line[BUFFER_LENGTH];
 	char* argv[ARGUMENT_SIZE];
 	char* token;
