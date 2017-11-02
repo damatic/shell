@@ -11,3 +11,5 @@ int cdir(char* path);
 int pwd();
 
 int clear_terminal();
+
+int history_shell(char* cmd);

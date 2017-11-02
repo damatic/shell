@@ -77,3 +77,31 @@ void clear_terminal()
 {
 	printf("\033c");
 }
+
+void history_shell(char* cmd) // dodati za brisanje citave povijesti...
+{
+	FILE* fd;
+	static int count = 0;
+	
+	if((fd = fopen("/home/matic/shell/history", "a")) == NULL){
+		printf("Cannot open history file!\n");
+		return;
+	}
+	
+	if(fprintf(fd, "%d %s", count++, cmd) < 0){
+		printf("Cannot print commands in history file!\n");
+		return;
+	}
+	
+	fclose(fd);
+}
+
+
+
+
+
+
+
+
+
+

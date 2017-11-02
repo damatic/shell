@@ -157,6 +157,8 @@ int main()
 				break;
 			}
 			
+			history_shell(line);
+			
 			if(strcmp(line, "pipe\n") == 0){
 				char* argpipe1[1024] = { "cat", "builtin.h", NULL };
 				char* argpipe2[1024] = { "wc", "-c", NULL};
@@ -213,7 +215,6 @@ int main()
 				wait(&child_status); 
 				//printf("Child exited\n");
 			}
-			
 			argv[0] = 0;
 			line[0] = '\0';
 			length = 0;
