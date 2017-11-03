@@ -169,6 +169,7 @@ int main()
 				line[0] = '\0';
 				length = 0;
 				argc = 0;
+				strcpy(program_path, "/home/matic/shell/commands/");
 				break;
 			}
 			
@@ -183,6 +184,7 @@ int main()
 				line[0] = '\0';
 				length = 0;
 				argc = 0;
+				strcpy(program_path, "/home/matic/shell/commands/");
 				break;
 			}
 			
@@ -202,6 +204,7 @@ int main()
 				line[0] = '\0';
 				length = 0;
 				argc = 0;
+				strcpy(program_path, "/home/matic/shell/commands/");
 				break;
 			}
 			
@@ -214,11 +217,16 @@ int main()
 			// cekanje da dijete proces zavrsi sa dodatnim informacijama, pomocu MACRO-a provjera
 				wait(&child_status); 
 				//printf("Child exited\n");
+				argv[0] = 0;
+				line[0] = '\0';
+				length = 0;
+				argc = 0;
 			}
 			argv[0] = 0;
 			line[0] = '\0';
 			length = 0;
 			argc = 0;
+			strcpy(program_path, "/home/matic/shell/commands/");
 		}
 	}
 	return 0;
