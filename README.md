@@ -17,13 +17,14 @@ Ljuska trenutno ima 8 vlastitih programa koje može izvršiti a to su:
 - move - premještanje direktorija na neko drugo mjesto
 - rm - brisanje datoteka ("u izradi rekurzivno brisanje skupa datoteka")
 - wc - ispis znakova/riječi/linija neke datoteke
+- history -  spremanje naredbi u datoteku
+- ps - ispis nekih informacija o trenutnim procesima, zasad rade samo ispis PID i CMD
 
-pipe - u izradi...
+
+pipe - usmjeravanje file descriptora radi, problem je citanje u drugom programu sa stdin-a...
 
 U izradi su i sljedeći programi i dodaci:
-- history -  spremanje naredbi u datoteku
 - kill - ubijanje procesa
-- list process - listanj trenutnih procesa
 - background process - stavljanje procesa u pozadinu
 - smart completion - nekakav način za pametno završavanje imena datoteka, direktorija...
 
