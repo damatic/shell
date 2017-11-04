@@ -117,3 +117,12 @@
 0 pipe
 1 clear
 2 exit
+0 ps
+1 kill 28321
+2 clear
+3 ps
+4 kill 28337
+5 kill asd
+0 kill
+1 kill 1234567
+2 exit

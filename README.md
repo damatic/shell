@@ -19,12 +19,10 @@ Ljuska trenutno ima 8 vlastitih programa koje može izvršiti a to su:
 - wc - ispis znakova/riječi/linija neke datoteke
 - history -  spremanje naredbi u datoteku
 - ps - ispis nekih informacija o trenutnim procesima, zasad rade samo ispis PID i CMD
-
-
-pipe - usmjeravanje file descriptora radi, problem je citanje u drugom programu sa stdin-a...
+- kill - ubijanje procesa sa signalom SIGTERM ne sa SIGMKILL
+- pipe - usmjeravanje file descriptora radi, problem je citanje u drugom programu sa stdin-a...
 
 U izradi su i sljedeći programi i dodaci:
-- kill - ubijanje procesa
 - background process - stavljanje procesa u pozadinu
 - smart completion - nekakav način za pametno završavanje imena datoteka, direktorija...
 
