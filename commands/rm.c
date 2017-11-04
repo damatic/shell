@@ -22,6 +22,16 @@ void print_usage(char *this)
 	exit(EXIT_FAILURE);
 }
 
+int brisanje_direktorija(char* path) // za prazne direktorije
+{
+	if(rmdir(path) == -1){
+		print_error("rm: rmdir", path);
+	}
+	
+	return 0;
+}
+
+
 int main(int argc, char* argv[])
 {
 	
