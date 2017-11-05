@@ -107,7 +107,7 @@ int main(int argc, char* argv[])
 		}
 		return 0;
 	}
-	
+	 
 	if(strcmp(argv[1], "-l") == 0){
 		while ((c = getc(file)) != EOF){
 			if(c == '\n')
