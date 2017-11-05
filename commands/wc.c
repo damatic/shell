@@ -1,17 +1,3 @@
-/*
-#########################################################
-#	
-#	VAŽNO!!!!
-#	
-#	trenutno je wc napravljen samo preko pipe-a
-#	program cita sa stdin-a i pise u datoteku,
-#	zatim program cita iz datoteke i provjerava 
-#	ovisno o argumentima, razlog je jer stdin nema EOF,
-#	vjerojatno pipe kod zatvaranja file descriptor-a...
-#	
-#	
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
