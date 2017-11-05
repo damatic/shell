@@ -13,3 +13,5 @@ int pwd();
 int clear_terminal();
 
 int history_shell(char* cmd);
+
+int check_builtin(char *line);

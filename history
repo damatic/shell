@@ -126,3 +126,168 @@
 0 kill
 1 kill 1234567
 2 exit
+0 cat history
+1 pipe
+2 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+1 pipe
+2 pipe
+3 pipe
+4 clear
+5 pipe
+0 pipe
+1 pipe
+2 clear
+3 exit
+0 pipe
+1 pipe
+2 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+1 pipe
+2 pipe
+0 pipe
+1 pipe
+2 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+1 pipe
+2 pipe
+0 pipe
+1 pipe
+0 pipe
+0 pipe
+1 pipe
+2 clear
+3 cat pipetest
+4 clear
+5 pipe
+0 pipe
+1 pipe
+0 pipe
+1 clear
+2 pipe
+0 pipe
+1 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+1 clear
+0 pipe
+1 clear
+0 cat builtin.h
+1 wc -w builtin.h
+0 cat builtin.h
+1 make all
+2 clear
+3 cat builtin.h
+4 clear
+5 pipe
+0 pipe
+1 pipe
+0 pwd
+1 pipe
+2 list
+3 pwd
+4 clear
+5 pwd
+6 list /commands
+7 list commands
+8 clear
+9 echo $PATH
+0 cat &TERM
+1 cat $TERM
+2 cat $SHELL
+3 clear
+4 move /home/matic/Documents/tabcomp /home/matic/Documents/tab
+5 move /home/matic/Documents/tab /home/matic/Documents/asd
+6 clear
+7 clear
+8 pipe
+0 pipe
+0 pipe
+1 pipe
+2 clear
+3 pipe
+4 pipe
+5 wc builtin.h
+6 wc -w builtin.h
+0 pipe
+1 wc -w builtin.h
+0 wc -w builtin.h
+1 clear
+2 exit
+0 wc -w builtin.h
+1 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+1 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+0 pipe
+1 pipe
+2 pipe
+3 pipe
+0 wc -w buitlin.h
+0 wc -l builtin.h
+0 wc -l builtin.h
+0 wc -l builtin.h
+1 clear
+2 pipe
+3 pipe
+4 pipe
+5 clear
+6 make all
+7 ./test
+8 pipe
+9 pipe
+0 wc -w builtin.h
+1 wc -l builtin.h
+2 pipe
+3 pipe
+4 clear
+5 exit
+0 pipe
+1 pipe
+2 pipe
+3 clear

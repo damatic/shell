@@ -5,7 +5,7 @@
 #include <string.h>
 
 #define BUFFER_SIZE_FOR_NAMES 124
-
+#define ARGUMENT_SIZE 50
 
 int init_shell(char* hostname, char* filename)
 {
@@ -94,6 +94,42 @@ void history_shell(char* cmd) // dodati za brisanje citave povijesti...
 	}
 	
 	fclose(fd);
+}
+
+int check_builtin(char *line)
+{
+	char *argv[ARGUMENT_SIZE];
+	int argc = 0;
+	char* token;
+	
+	
+	token = strtok(line, " \n\t()<>|&;");
+	while(token != NULL && argc < 256){
+		argv[argc] = token;
+		token = strtok(NULL, " \n\t()<>|&;"); // " \n\t()<>|&;" znakovi koje "ignorira"
+		argc++;
+	}
+	
+	argv[argc] = NULL;
+
+	if(strcmp(line, "exit") == 0){
+		exit_shell();
+		return 1;
+	}else if(strcmp(line, "cdir") == 0){
+		cdir(argv[1]);
+		return 1;
+	}else if(strcmp(line, "pwd") == 0){
+		pwd();
+		return 1;
+	}else if(strcmp(line, "clear") == 0){
+		clear_terminal();
+		return 1;
+	}else if(strcmp(line, "echo") == 0){
+		echo(argv[1]);
+		return 1;
+	}
+	
+	return 0;	
 }
 
 

@@ -19,112 +19,14 @@
 #include <sys/wait.h>
 #include <errno.h>
 #include "builtin.h"
+#include "pipe.h"
+
 
 #define BUFFER_LENGTH 1024 // velicina buffera
 #define BUFFER_SIZE_FOR_NAMES 124
 #define ARGUMENT_SIZE 50
 //  strsep(“|”)
 
-
-// pipe radi, oba programa odrade posao, problem je kod citanja izlaza, ne postoji EOF
-void execArgsPiped(char* parsed[], char* parsedpipe[])
-{
-	// execlp("cat", "cat", "builtin.h", NULL)
-	// execlp("wc", "wc", "-w", NULL)
-	// execvp(program_path, parsed)
-	// execvp(program_path, parsedpipe)
-	
-	int first_child_status;
-	int second_child_status;
-	//int extstatus;
-    int pipefd[2];
-    pid_t pid1, pid2;
-	char program_path[PATH_MAX] = "/home/matic/shell/commands/"; // potrebno upisati trenutnu putanju!!!
-	
-    if (pipe(pipefd) < 0) {
-        printf("\nPipe could not be initialized!\n");
-        return;
-    }
-
-    if ((pid1 = fork()) == -1) {
-        printf("\nfork() failed\n");
-        return;
-    }
-
-    if (pid1 == 0) {
-        printf("First child is writing to pipe...\n");
-		close(pipefd[0]);
-        dup2(pipefd[1], STDOUT_FILENO);
-        close(pipefd[1]);
-        
-		strcat(program_path, parsed[0]);
-        if (execvp(program_path, parsed) < 0) {
-            printf("\nCould not execute command 1..\n");
-            exit(1);
-        }
-		
-    } else {
-		wait(&first_child_status); // cekanje da zavrsi prvo dijete
-
-		/*if (WIFEXITED(first_child_status) == 0)
-			printf("exit status = %d\n", WEXITSTATUS(first_child_status));*/
-		
-		if ((pid2 = fork()) == -1) { // drugi put fork(), iz istog roditelja
-			printf("\nfork() failed\n");
-			return;
-		}
-		
-		if(pid2 == 0){
-			printf("Second child is reading from pipe...\n");
-			close(pipefd[1]);
-			dup2(pipefd[0], STDIN_FILENO);
-			close(pipefd[0]);
-			
-			strcat(program_path, parsedpipe[0]);
-			if (execvp(program_path, parsedpipe) < 0) {
-				printf("\nCould not execute command 2..\n");
-				exit(1);
-			}
-		}
-		wait(&second_child_status);
-	}
-}
-
-int check_builtin(char *line)
-{
-	char *argv[ARGUMENT_SIZE];
-	int argc = 0;
-	char* token;
-	
-	
-	token = strtok(line, " \n\t()<>|&;");
-	while(token != NULL && argc < 256){
-		argv[argc] = token;
-		token = strtok(NULL, " \n\t()<>|&;"); // " \n\t()<>|&;" znakovi koje "ignorira"
-		argc++;
-	}
-	
-	argv[argc] = NULL;
-
-	if(strcmp(line, "exit") == 0){
-		exit_shell();
-		return 1;
-	}else if(strcmp(line, "cdir") == 0){
-		cdir(argv[1]);
-		return 1;
-	}else if(strcmp(line, "pwd") == 0){
-		pwd();
-		return 1;
-	}else if(strcmp(line, "clear") == 0){
-		clear_terminal();
-		return 1;
-	}else if(strcmp(line, "echo") == 0){
-		echo(argv[1]);
-		return 1;
-	}
-	
-	return 0;	
-}
 
 int main()
 {

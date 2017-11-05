@@ -13,6 +13,11 @@
 #include <time.h>
 #include "../builtin.h"
 
+// ls samo imena
+// ls -l imena, dozvole, veze, vlasnici bez . i ..
+// ls -all imena, dozvole, veze, vlasnici sa . i ..
+// ls -a imena i . i .. bez dozvola itd
+
 
 int main(int argc, char* argv[])
 {

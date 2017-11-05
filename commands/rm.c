@@ -3,7 +3,7 @@
 #include <errno.h>
 #include <string.h>
 #include <sys/stat.h>
-
+#include <unistd.h>
 
 void print_error(char *this, char *filename)
 {	// u slucaju da radnja ne uspije iz nekog razloga

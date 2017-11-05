@@ -34,11 +34,13 @@ int main(int argc, char* argv[])
 	
 	file = fopen(argv[1], "r");
 	
-	if (file) {
-		while ((c = getc(file)) != EOF)
+	if (file != NULL) {
+		while ((c = getc(file)) != EOF){
 			putchar(c);
-		fclose(file);
+		}
+		putchar('\n');
 	}
+	fclose(file);
 
 	return 0;
 }
