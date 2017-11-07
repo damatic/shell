@@ -14,16 +14,16 @@ Ljuska trenutno ima 8 vlastitih programa koje može izvršiti a to su:
 - copy - kopiranje datoteka ("u izradi rekurzivno kopiranje direktorija koji nije prazan")
 - list - ispis sadržaja direktorija, ispisuje većinu informacija ("u izradi list program s argumentima za sažeto i detaljno ispisivanje")
 - mkd - stvaranje novog direktorija
-- move - premještanje direktorija na neko drugo mjesto
+- move - premještanje direktorija na neko drugo mjesto ("reukrzivno nije zavrseno")
 - rm - brisanje datoteka ("u izradi rekurzivno brisanje skupa datoteka")
 - wc - ispis znakova/riječi/linija neke datoteke
-- history -  spremanje naredbi u datoteku
+- history - spremanje naredbi u datoteku ("poboljsati brojac koji broji naredbe")
 - ps - ispis nekih informacija o trenutnim procesima, zasad rade samo ispis PID i CMD
 - kill - ubijanje procesa sa signalom SIGTERM ne sa SIGMKILL
-- pipe - usmjeravanje file descriptora radi, problem je citanje u drugom programu sa stdin-a...
+- pipe - usmjeravanje izlaza jednog programa na ulaz drugoga
 - head - ispis prvih 10 linija iz datoteke
 
 U izradi su i sljedeći programi i dodaci:
-- background process - stavljanje procesa u pozadinu
+- background process - stavljanje procesa u pozadinu...
 - smart completion - nekakav način za pametno završavanje imena datoteka, direktorija...
-
+- potrebno main razbiti na vise funkcija, koristiti malloc gdje je moguce, zavrsiti programe koji koriste rekurziju, definirati konstantne vrijednosti i varijable, napraviti vise opcija za pojedine programe...
