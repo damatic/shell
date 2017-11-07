@@ -33,16 +33,20 @@ int main()
 	pid_t pid;
 	char program_path[PATH_MAX] = "/home/matic/shell/commands/"; // korisnik postaviti svoju putanju!!!!
 	char line[BUFFER_LENGTH];
-	char* argv[ARGUMENT_SIZE];
+	char* argv1[ARGUMENT_SIZE];
+	char* argv2[ARGUMENT_SIZE];
 	char* token;
 	int child_status;
-	int argc = 0;
+	int argc1 = 0;
+	int argc2 = 0;
 	size_t length;
 	char hostname[BUFFER_SIZE_FOR_NAMES] = "slash";
 	char* username = "matic";
 	char* hostname_file = "/home/matic/shell/hostname_test";
 	char line_builtin[BUFFER_LENGTH];
-
+	int count_pipe = 0;
+	
+	
 	while(1){
 		//printf("START\n");
 		while(1){
@@ -50,7 +54,7 @@ int main()
 			//strcpy(program_path, path);
 		
 			printf("%s@%s >> ", username, name(hostname_file));
-					
+			
 			if (fgets(line, BUFFER_LENGTH, stdin) == 0) // u slucaju da je ^D End-Of-File
 				return 1;
 
@@ -61,57 +65,72 @@ int main()
 			
 			history_shell(line);
 			
-			if(strcmp(line, "pipe\n") == 0){
-				char* argpipe1[1024] = { "cat", "builtin.h", NULL };
-				char* argpipe2[1024] = { "wc", "-c", NULL};
-				
-				execArgsPiped(argpipe1, argpipe2);
-
-				argv[0] = 0;
-				line[0] = '\0';
-				length = 0;
-				argc = 0;
-				strcpy(program_path, "/home/matic/shell/commands/");
-				break;
-			}
-			
 			length = strlen(line);
 			if (line[length - 1] == '\n'){ // brise oznaku za novi red
 				line[length - 1] = '\0';
-			}		
+			}
 			
 			strcpy(line_builtin, line); // posebno za builtin programe, da ne dira izvorni string
 			if(check_builtin(line_builtin) == 1){
-				argv[0] = 0;
+				argv1[0] = 0;
+				argv2[0] = 0;
 				line[0] = '\0';
 				length = 0;
-				argc = 0;
+				argc1 = 0;
+				argc2 = 0;
 				strcpy(program_path, "/home/matic/shell/commands/");
 				break;
 			}
 			
-			token = strtok(line, " \n\t()<>|&;");
-			while(token != NULL && argc < 256){
-				argv[argc] = token;
-				token = strtok(NULL, " \n\t()<>|&;"); // " \n\t()<>|&;" znakovi koje "ignorira"
-				argc++;
+			token = strtok(line, " \n\t()<>&;");
+			while(token != NULL && argc1 < 256 && argc2 < 256){
+				if(strcmp(token, "|") == 0){
+					count_pipe = 1;
+				}else{
+					if(count_pipe == 0){
+						argv1[argc1] = token;
+						argc1++;
+					}
+					if(count_pipe == 1){
+						argv2[argc2] = token;
+						argc2++;
+					}
+				}
+				token = strtok(NULL, " \n\t()<>&;"); // " \n\t()<>|&;" znakovi koje "ignorira"
 			}
-						
-			argv[argc] = NULL; // potrebno zbog execvp, da se zna gdje je kraj niza argumenata
-			strcat(program_path, argv[0]); // spajanje putanje gdje se nalaze programi i samog imena programa
+			
 
-			if((pid = fork()) == -1){
-				perror("fork() failed!");
-				argv[0] = 0;
+			if(count_pipe > 0){
+				argv1[argc1] = NULL;
+				argv2[argc2] = NULL;
+
+				execArgsPiped(argv1, argv2);
+				argv1[0] = 0;
+				argv2[0] = 0;
 				line[0] = '\0';
 				length = 0;
-				argc = 0;
+				argc1 = 0;
+				argc2 = 0;
+				strcpy(program_path, "/home/matic/shell/commands/");
+				break;
+			}
+			
+			argv1[argc1] = NULL; // potrebno zbog execvp, da se zna gdje je kraj niza argumenata
+			strcat(program_path, argv1[0]); // spajanje putanje gdje se nalaze programi i samog imena programa
+			
+			if((pid = fork()) == -1){
+				argv1[0] = 0;
+				argv2[0] = 0;
+				line[0] = '\0';
+				length = 0;
+				argc1 = 0;
+				argc2 = 0;
 				strcpy(program_path, "/home/matic/shell/commands/");
 				break;
 			}
 			
 			if(pid == 0){ // child process
-				if (execvp(program_path, argv) == -1){
+				if (execvp(program_path, argv1) == -1){
 						printf("ERRNO: %s\n", strerror(errno));
 						exit(1);
 				}
@@ -119,15 +138,20 @@ int main()
 			// cekanje da dijete proces zavrsi sa dodatnim informacijama, pomocu MACRO-a provjera
 				wait(&child_status); 
 				//printf("Child exited\n");
-				argv[0] = 0;
+				argv1[0] = 0;
+				argv2[0] = 0;
 				line[0] = '\0';
 				length = 0;
-				argc = 0;
+				argc1 = 0;
+				argc2 = 0;
+				strcpy(program_path, "/home/matic/shell/commands/");
 			}
-			argv[0] = 0;
+			argv1[0] = 0;
+			argv2[0] = 0;
 			line[0] = '\0';
 			length = 0;
-			argc = 0;
+			argc1 = 0;
+			argc2 = 0;
 			strcpy(program_path, "/home/matic/shell/commands/");
 		}
 	}

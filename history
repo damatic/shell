@@ -291,3 +291,28 @@
 1 pipe
 2 pipe
 3 clear
+0 exit
+0 head main.c
+1 head main.c
+2 clear
+3 head main.c
+4 clear
+5 head main.c
+6 head main.c
+7 head main.c
+8 head main.c
+9 clear
+0 cat builtin.h | wc -w
+0 cat builtin.h | wc -w
+0 cat builtin.h | wc -w
+0 cat builtin.h | wc -w
+0 cat builtin.h | wc -w
+1 pipe
+0 cat builtin.h | wc -w
+0 cat builtin.h | wc -w
+0 cat builtin.h | wc -w
+0 cat builtin.h | wc -w
+1 clear
+0 list | wc -w
+1 list
+2 clear

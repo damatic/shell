@@ -70,8 +70,9 @@ int main(int argc, char* argv[])
 		}
 		printf("Broj znakova u datoteci je: %d\n", count);
 		
-		if(flag != 0){ // ciscenje programa u slucaju da je bio pipe
+		if(flag == 1){ // ciscenje programa u slucaju da je bio pipe
 			free(argv[2]);
+			fclose(file);
 			if(remove("pipe_temp") == -1){
 				perror("cannot remove file 'pipe_temp'");
 			}
@@ -85,10 +86,11 @@ int main(int argc, char* argv[])
 		}
 		printf("Broj \"rijeci\" u datoteci je: %d\n", count);
 		
-		if(flag != 0){ // ciscenje programa u slucaju da je bio pipe
+		if(flag == 1){ // ciscenje programa u slucaju da je bio pipe
 			free(argv[2]);
-			if(remove(argv[1]) == -1){
-				perror("cannot remove file 'pipe_temp'");
+			fclose(file);
+			if(remove("pipe_temp") == -1){
+				perror("Cannot remove file 'pipe_temp'");
 			}
 		}
 		return 0;
@@ -101,21 +103,21 @@ int main(int argc, char* argv[])
 		}
 		printf("Broj linija u datoteci je: %d\n", count);
 		
-		if(flag != 0){ // ciscenje programa u slucaju da je bio pipe
+		if(flag == 1){ // ciscenje programa u slucaju da je bio pipe
 			free(argv[2]);
-		if(remove(argv[1]) == -1){
+			fclose(file);
+		if(remove("pipe_temp") == -1){
 				perror("cannot remove file 'pipe_temp'");
 			}
 		}	
 		return 0;
 	}
-
 	fclose(file);
 	
-	if(flag != 0){ // ciscenje programa u slucaju da je bio pipe
+	if(flag == 1){ // ciscenje programa u slucaju da je bio pipe
 		free(argv[2]);
 		if(remove("pipe_temp") == -1){
-			perror("cannot remove file 'pipe_temp'");
+			perror("ERROR: Cannot remove file 'pipe_temp'");
 		}
 	}
 	

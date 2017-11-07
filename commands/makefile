@@ -1,4 +1,4 @@
-all: copy list mkd move cat chmod wc rm ps kill
+all: copy list mkd move cat chmod wc rm ps kill head
 
 copy: copy.c
 	gcc -Wall copy.c -o copy
@@ -29,6 +29,9 @@ ps: printproc.c
 
 kill: kill.c
 	gcc -Wall kill.c -o kill
+	
+head: head.c
+	gcc -Wall head.c -o head
 
-clean: copy list mkd move cat chmod wc rm ps kill
-	rm -r copy list mkd move cat chmod wc rm ps kill
+clean: copy list mkd move cat chmod wc rm ps kill head
+	rm -r copy list mkd move cat chmod wc rm ps kill head
