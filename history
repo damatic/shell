@@ -316,3 +316,62 @@
 0 list | wc -w
 1 list
 2 clear
+0 echo $PATH
+1 clear
+2 make all
+0 echo $TERM
+0 echo $asd
+0 echo $asd
+0 echo $
+0 echo $asd
+1 echo asd
+2 echo slon ide kuci
+0 echo $asd
+0 echo $asd
+0 echo $asdf
+1 clear
+2 exit
+0 echo "slon ide kuci"
+1 clear
+0 echo slon ide kuci
+0 echo slon ide kuci
+0 echo slon ide kuci
+1 clear
+0 	
+0 0 echo slon je velik
+0 clear
+1 echo $TERM
+2 pwd
+3 list .
+0 pwd
+1 clear
+2 list
+3 list ..
+4 list../
+5 list ../
+6 list /home/matic
+7 list .
+0 pwd
+1 list
+2 list
+3 pwd
+4 list
+0 list
+1 list
+2 pwd
+0 list
+1 pwd
+2 list
+3 pwd
+4 pwd
+5 pwd
+6 wc -w builtin.h
+0 list
+1 pwd
+2 list
+0 pwd
+1 list
+2 wc -w builtin.h
+3 list
+4 list .
+5 clear

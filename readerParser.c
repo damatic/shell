@@ -16,9 +16,4 @@ void parseCommand(char* commandLine)
 
 }
 
-void parseError()
-{
-
-}
-
 

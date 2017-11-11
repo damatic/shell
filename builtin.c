@@ -7,7 +7,7 @@
 #define BUFFER_SIZE_FOR_NAMES 124
 #define ARGUMENT_SIZE 50
 
-int init_shell(char* hostname, char* filename)
+int init_hostname(char* hostname, char* filename)
 {
 	FILE* fp;
 	
@@ -19,8 +19,7 @@ int init_shell(char* hostname, char* filename)
 	fclose(fp);
 
 	return 0;
-
-}	
+}
 
 void exit_shell()
 {
@@ -28,9 +27,27 @@ void exit_shell()
 	_exit(0);
 }
 
-int echo(char* line)
+void echo(char* argv[]) // echo sa ispisom systemskih varijabli
 {
-	return 0;
+	char* token;
+	char* buff;
+	int i = 1;
+	
+	token = strtok(argv[1], "$");
+	
+	if(argv[1][0] == '$'){
+		buff = getenv(token);
+		if(buff != NULL)
+			printf("%s\n", buff);
+		else
+			printf("Cannot find system variable\n");
+	}else{
+		while(argv[i] != NULL){
+			printf("%s ", argv[i]);
+			i++;
+		}
+		printf("\n");
+	}
 }
 
 char* name(char* hostname_file)
@@ -102,7 +119,6 @@ int check_builtin(char *line)
 	int argc = 0;
 	char* token;
 	
-	
 	token = strtok(line, " \n\t()<>|&;");
 	while(token != NULL && argc < 256){
 		argv[argc] = token;
@@ -125,7 +141,7 @@ int check_builtin(char *line)
 		clear_terminal();
 		return 1;
 	}else if(strcmp(line, "echo") == 0){
-		echo(argv[1]);
+		echo(argv);
 		return 1;
 	}
 	

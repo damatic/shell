@@ -1,4 +1,4 @@
-int init_shell(char* hostname, char* filename);
+int init_hostname(char* hostname, char* filename);
 
 int exit_shell();
 
