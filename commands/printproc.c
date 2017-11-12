@@ -5,13 +5,31 @@
 #include <string.h>
 #include <ctype.h>
 #include <linux/kdev_t.h>
+#include <errno.h>
 
 
 #define BUFFER_LENGTH 1024
 #define BUFFER_SIZE_FOR_NAMES 50
 
 
-int main()
+void print_error(char *this)
+{	// u slucaju da radnja ne uspije iz nekog razloga
+	// this ce biti ime komande
+	fprintf(stderr, "%s: cannot list informations about processes\n"
+	"ERROR: %s\n", this, strerror(errno));
+	
+	exit(EXIT_FAILURE);
+}
+
+void print_usage(char *this)
+{	// u slucaju da nije sintaksno tocno
+	fprintf(stderr, "SYNTAX ERROR: \n"
+	"USAGE %s\n", this);
+	
+	exit(EXIT_FAILURE);
+}
+
+int main(int argc, char* argv[])
 {
 	DIR *mydir;
 	FILE* fp;
@@ -27,8 +45,7 @@ int main()
 	//int starttime;
 	
     if ((mydir = opendir("/proc")) == NULL){
-        perror("/proc");
-        exit(1);
+        print_error(argv[0]);
     }
 	
 	printf("%5s %6s %s %7s\n", "PID", "TTY", "STATE", "COMMAND"); // formatiranje headera

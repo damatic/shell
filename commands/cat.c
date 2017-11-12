@@ -7,7 +7,7 @@
 void print_error(char *this, char *filename)
 {	// u slucaju da radnja ne uspije iz nekog razloga
 	// this ce biti ime komande
-	fprintf(stderr, "%s: Cant print '%s' to terminal\n"
+	fprintf(stderr, "%s: cannot print '%s' to terminal\n"
 	"ERROR: %s\n", this, filename, strerror(errno));
 	
 	exit(EXIT_FAILURE);
@@ -32,14 +32,15 @@ int main(int argc, char* argv[])
 		return EXIT_FAILURE;
 	}
 	
-	file = fopen(argv[1], "r");
-	
-	if (file != NULL) {
-		while ((c = getc(file)) != EOF){
-			putchar(c);
-		}
-		putchar('\n');
+	if((file = fopen(argv[1], "r")) == NULL){
+		print_error(argv[0], argv[1]);
 	}
+
+	while ((c = getc(file)) != EOF){
+		putchar(c);
+	}
+	putchar('\n');
+	
 	fclose(file);
 
 	return 0;

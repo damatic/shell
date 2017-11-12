@@ -7,11 +7,15 @@
 #include <pwd.h>
 #include <grp.h>
 #include <string.h>
+#include <linux/limits.h>
+#include <errno.h>
+
 
 #define __USE_XOPEN // potrebno za strptime javlja gresku bez njega
 #define _GNU_SOURCE // -||-
 #include <time.h>
-#include "../builtin.h"
+
+#define BUFFER_LENGTH 1024
 
 // ls samo imena
 // ls -l imena, dozvole, veze, vlasnici bez . i ..
@@ -19,35 +23,50 @@
 // ls -a imena i . i .. bez dozvola itd
 
 
+void print_error(char *this, char *filename)
+{	// u slucaju da radnja ne uspije iz nekog razloga
+	// this ce biti ime komande
+	fprintf(stderr, "%s: cannot list directory '%s'\n"
+	"error: %s\n", this, filename, strerror(errno));
+	
+	exit(EXIT_FAILURE);
+}
+
+void print_usage(char *this)
+{	// u slucaju da nije sintaksno tocno
+	fprintf(stderr, "SYNTAX ERROR: "
+	"USAGE %s [path]\n", this);
+	
+	exit(EXIT_FAILURE);
+}
+
 int main(int argc, char* argv[])
 {
 	DIR *mydir;
     struct dirent *myfile;
     struct stat mystat;
-	char buf[512];
+	char buf[BUFFER_LENGTH];
 	char* last_modif_date;
 	struct tm tm;
 	struct passwd *pwd;
 	struct group *grp;
 
 	
-
 	if(argv[1] == NULL){ // u slucaju da nema argumenta poslije ls
 		argv[1] = ".";
 	}
-		
-	//printf("Broj argumenata: %d, %s %s\n", argc, argv[0], argv[1]);
 	
-    mydir = opendir(argv[1]);
+    if((mydir = opendir(argv[1])) == NULL){
+		print_error(argv[0], argv[1]);
+	}
     
     while((myfile = readdir(mydir)) != NULL){
     	if(myfile->d_name[0] != '.'){
 			sprintf(buf, "%s/%s", argv[1], myfile->d_name);
 		    stat(buf, &mystat);
 
-			
 		    // dozvole nad datotekama
-		    //printf("%o\t", mystat.st_mode & S_IWGRP);		    
+		    //printf("%o\t", mystat.st_mode & S_IWGRP);
 		    printf( (mystat.st_mode & S_IRUSR) ? "r" : "-"); // vrati 400
 		    printf( (mystat.st_mode & S_IWUSR) ? "w" : "-"); // vrati 200 itd
 		    printf( (mystat.st_mode & S_IXUSR) ? "x" : "-"); // vrati 0 ako nema dozvole
@@ -85,7 +104,6 @@ int main(int argc, char* argv[])
     }
     
     closedir(mydir);
-    // printf("list exited\n");
     
 	return 0;
 }

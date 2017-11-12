@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
+#include <linux/limits.h>
 
 void print_error(char *this, char *filename1, char *filename2)
 {	// u slucaju da radnja ne uspije iz nekog razloga
@@ -12,7 +13,7 @@ void print_error(char *this, char *filename1, char *filename2)
 	fprintf(stderr, "%s: cannot move '%s' to '%s'\n"
 	"error: %s\n", this, filename1, filename2, strerror(errno));
 	
-	exit(-1);
+	exit(EXIT_FAILURE);
 }
 
 void print_usage(char *this)
@@ -20,25 +21,31 @@ void print_usage(char *this)
 	fprintf(stderr, "SYNTAX ERROR: \n"
 	"USAGE %s [filename1] [filename2]\n", this);
 	
-	exit(-1);
+	exit(EXIT_FAILURE);
 }
 
 int main(int argc, char* argv[])
 {	
-	//errno = 0; // potrebno postavit, trenutno nema greski
+	struct stat stbuf;
+	char buffer[PATH_MAX];
 	
-	//printf("%d\n", argc);
 	
-	if(argc == 3){
-		if(rename(argv[1], argv[2]) == -1) {
-			print_error(argv[0], argv[1], argv[2]);
-			return -1;
-		}
-	}else{
+	if(argv[1] == NULL || argv[2] == NULL){
 		print_usage(argv[0]);
-		return -1;
 	}
-    
+	
+	strcpy(buffer, argv[2]);
+
+	if(stat(argv[2], &stbuf) == 0){					// u slucaju da se dezi premjestiti direktorij sa sadrzajem
+		if((stbuf.st_mode & S_IFMT) == S_IFDIR){
+			strcat(buffer, "/");
+			strcat(buffer, argv[1]);
+		}
+	}
+	
+	if(rename(argv[1], buffer) == -1) {
+		print_error(argv[0], argv[1], buffer);
+	}
     
 	return 0;
 }

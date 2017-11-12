@@ -9,7 +9,7 @@
 void print_error(char *this, char *filename)
 {	// u slucaju da radnja ne uspije iz nekog razloga
 	// this ce biti ime komande
-	fprintf(stderr, "%s: Cannot count chars/words/lines in '%s'\n"
+	fprintf(stderr, "%s: cannot count chars/words/lines in '%s'\n"
 	"ERROR: %s\n", this, filename, strerror(errno));
 	
 	exit(EXIT_FAILURE);

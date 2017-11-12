@@ -10,11 +10,11 @@ Program je u cijelosti "kompajliran". Ako bi se program na novo "kompajlirao" te
 Ljuska trenutno ima 13 vlastitih programa koje može izvršiti a to su:
 - cat - ispis datoteke na ekran
 - chmod - promjena prava pristupa datotekama i direktorijima
-- copy - kopiranje datoteka ("u izradi rekurzivno kopiranje direktorija koji nije prazan")
+- copy - kopiranje datoteka pojedinacno, ne i direktorija sa sadrzajem
 - list - ispis sadržaja direktorija, ispisuje većinu informacija ("u izradi list program s argumentima za sažeto i detaljno ispisivanje")
 - mkd - stvaranje novog direktorija
-- move - premještanje direktorija na neko drugo mjesto ("rekurzivno nije zavrseno")
-- rm - brisanje datoteka ("u izradi rekurzivno brisanje skupa datoteka")
+- move - premještanje premjestanje direktorija i datoteka na drugu lokaciju
+- rm - brisanje datoteka ili praznih direktorija
 - wc - ispis znakova/riječi/linija neke datoteke
 - ps - ispis nekih informacija o trenutnim procesima, kao sto su PID, STATE, TTY i COMMAND
 - kill - ubijanje procesa sa signalom SIGTERM ne sa SIGMKILL

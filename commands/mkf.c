@@ -1,41 +1,46 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <errno.h>
-#include <string.h>
+#include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include <signal.h>
-
+#include <string.h>
+#include <errno.h>
 
 void print_error(char *this, char *filename)
 {	// u slucaju da radnja ne uspije iz nekog razloga
 	// this ce biti ime komande
-	fprintf(stderr, "%s: cannot terminate process with PID: %s\n"
-	"ERROR: %s\n", this, filename, strerror(errno));
+	fprintf(stderr, "%s: failed to create '%s' file\n"
+	"error: %s\n", this, filename, strerror(errno));
 	
 	exit(EXIT_FAILURE);
 }
 
 void print_usage(char *this)
 {	// u slucaju da nije sintaksno tocno
-	fprintf(stderr, "SYNTAX ERROR: \n"
-	"USAGE %s [PID]\n", this);
+	fprintf(stderr, "SYNTAX ERROR: "
+	"USAGE %s [filename]\n", this);
 	
 	exit(EXIT_FAILURE);
 }
 
-
 int main(int argc, char* argv[])
 {
-	pid_t pid;
+	FILE* fp;
+	struct stat stbuf;
 	
 	if(argv[1] == NULL){
 		print_usage(argv[0]);
 	}
 	
-	pid = atoi(argv[1]);
+	if(stat(argv[1], &stbuf) == 0){ // ako datoteka postoji
+		print_error(argv[0], argv[1]);
+	}
 	
-	if(kill(pid, SIGTERM) != 0){			// bolje SIGTERM, sa SIGKILL proces nema mogucnost da odradi ciscenje
+	if((fp = fopen(argv[1] , "a")) == NULL){
+		print_error(argv[0], argv[1]);
+	}
+	
+	if(fclose(fp)){
 		print_error(argv[0], argv[1]);
 	}
 	

@@ -7,6 +7,7 @@
 #include <errno.h>
 #include <linux/limits.h>
 
+#define BUFFER_LENGTH 1024
 
 void print_error(char *this, char *src_filename, char *dest_filename)
 {	// u slucaju da radnja ne uspije iz nekog razloga
@@ -25,26 +26,21 @@ void print_usage(char *this)
 	exit(EXIT_FAILURE);
 }
 
-int copyFile(char* src_file, char* dest_file) // kopiranje datoteka
+void copyFile(char* src_file, char* dest_file) // kopiranje datoteka
 {
 	FILE *fd_src;
 	FILE *fd_dest;
 	size_t read_size, write_size;
-	unsigned char buff[8192];
-	
-	fd_src = fopen(src_file, "rb"); 
-	if(fd_src == NULL){
-		perror("file open for reading");
-		return EXIT_FAILURE;
+	char buff[BUFFER_LENGTH];
+
+	if((fd_src = fopen(src_file, "rb")) == NULL){
+		print_error("copy", src_file, dest_file);
 	}
 	
-	fd_dest = fopen(dest_file, "wb");
-	if(fd_dest == NULL){
+	if((fd_dest = fopen(dest_file, "wb")) == NULL){
 		fclose(fd_src);
-		perror("file open for writing");
-		return EXIT_FAILURE;
+		print_error("copy", src_file, dest_file);
 	}
-	
 	
 	do {
     	read_size = fread(buff, 1, sizeof(buff), fd_src); // citanje datoteke
@@ -57,58 +53,47 @@ int copyFile(char* src_file, char* dest_file) // kopiranje datoteka
 	if (write_size != 0) 
 		perror("copy");
 	
-	if (fclose(fd_dest)) 
-		perror("close output file");
-	if (fclose(fd_src)) 
-		perror("close input file");
+	if (fclose(fd_dest) == EOF) 
+		print_error("copy", src_file, dest_file);
+	if (fclose(fd_src) == EOF) 
+		print_error("copy", src_file, dest_file);
 
-	return 0;
 }
 
-int copyDirectory(char* src_dir, char* dest_dir) // kopiranje direktorija - rekurzivno
+void copyDirectory(char* src_dir, char* dest_dir) 		// kopiranje direktorija - rekurzivno
 {
-	// potrebna implementacija!!!!
-	
-	return 0;
+	printf("Direktorij nije prazan\n");
 }
 
 int main(int argc, char* argv[])
 {	
-	//errno = 0; // potrebno postavit, trenutno nema greski
-	//printf("%d\n", argc);
-	
 	char buffer[PATH_MAX];
 	struct stat stbuf1;
 	struct stat stbuf2;
 	
-	if(stat(argv[1], &stbuf1) == -1){ // ako source file/dir ne postoji
+	if(stat(argv[1], &stbuf1) == -1){ 					// ako source file/dir ne postoji
 		print_error(argv[0], argv[1], argv[2]);
-		return EXIT_FAILURE;
-	}else{
-		if((stbuf1.st_mode & S_IFMT) == S_IFREG){
-		// (S_ISREG(sb.st_mode)) macro:)
-		// ako je src datoteka
-			if((stat(argv[2], &stbuf2) == 0) && (stbuf2.st_mode & S_IFMT) == S_IFREG){
-			// ako dest postoji i ako je datoteka
-				//printf("f1 i f2 postoje i datoteke su\n");
-				copyFile(argv[1], argv[2]);
-			}else if(((stbuf2.st_mode & S_IFMT) != S_IFDIR)){ // ako ne postoji file2
-				copyFile(argv[1], argv[2]);					//a naveden je u putanji
-			}else{ // ako ne postoji 
-				strcpy(buffer, argv[2]);
-				//strcat(buffer, "/");
-				strcat(buffer, argv[1]);
-				printf("BUFFER: %s\n", buffer);
-				copyFile(argv[1], buffer);
-			}
-		}else if((stbuf1.st_mode & S_IFMT) == S_IFDIR){ // ako je direktorij
-			copyDirectory(argv[1], argv[2]);
-		}else{
-			print_error(argv[0], argv[1], argv[2]);
-		}
 	}
-
-    
+	
+	
+	if((stbuf1.st_mode & S_IFMT) == S_IFREG){
+		if((stat(argv[2], &stbuf2) == 0) && (stbuf2.st_mode & S_IFMT) == S_IFREG){ // ako je src datoteka
+		// ako dest postoji i ako je datoteka
+			copyFile(argv[1], argv[2]);
+		}else if(((stbuf2.st_mode & S_IFMT) != S_IFDIR)){ 	// ako ne postoji file2
+			copyFile(argv[1], argv[2]);						// a naveden je u putanji
+		}else{ 
+			strcpy(buffer, argv[2]);
+			strcpy(buffer, "/");
+			strcat(buffer, argv[1]);
+			printf("BUFFER: %s\n", buffer);
+			copyFile(argv[1], buffer);
+		}
+	}else if((stbuf1.st_mode & S_IFMT) == S_IFDIR){ // ako je direktorij
+		copyDirectory(argv[1], argv[2]);
+	}else{
+		print_error(argv[0], argv[1], argv[2]);
+	}
     
 	return 0;
 }

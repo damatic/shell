@@ -1,4 +1,4 @@
-all: copy list mkd move cat chmod wc rm ps kill head
+all: copy list mkd move cat chmod wc rm ps kill head mkf
 
 copy: copy.c
 	gcc -Wall copy.c -o copy
@@ -33,5 +33,8 @@ kill: kill.c
 head: head.c
 	gcc -Wall head.c -o head
 
-clean: copy list mkd move cat chmod wc rm ps kill head
-	rm -r copy list mkd move cat chmod wc rm ps kill head
+mkf: mkf.c
+	gcc -Wall mkf.c -o mkf
+
+clean: copy list mkd move cat chmod wc rm ps kill head mkf
+	rm -r copy list mkd move cat chmod wc rm ps kill head mkf

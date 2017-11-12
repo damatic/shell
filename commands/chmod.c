@@ -5,7 +5,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#include <linux/limits.h>
 
+#define BUFFER_LENGTH 1024
 
 void print_error(char *this, char *filename)
 {	// u slucaju da radnja ne uspije iz nekog razloga
@@ -26,21 +28,24 @@ void print_usage(char *this)
 
 int main(int argc, char* argv[])
 {
-    char mode[125];
-    char buf[125];
+    char mode_buffer[BUFFER_LENGTH];
+    char buf[PATH_MAX];
     int i;
 	
-	strcpy(mode, argv[1]);
+	if(argv[1] == NULL || argv[2] == NULL){
+		print_usage(argv[0]);
+	}	
+	
+	strcpy(mode_buffer, argv[1]);
 	strcpy(buf, argv[2]);
 	
-    i = strtol(mode, 0, 8);	
+    if((i = strtol(mode_buffer, 0, 8)) == 0){
+		print_error(argv[0], argv[2]);
+	}
 	
-    if (chmod (buf, i) < 0)
-    {
-        fprintf(stderr, "%s: error in chmod(%s, %s) - %d (%s)\n",
-                argv[0], buf, mode, errno, strerror(errno));
-        exit(1);
+    if (chmod(buf, i) == -1){
+		print_error(argv[0], argv[2]);
     }
 	
-    return(0);
+    return 0;
 }

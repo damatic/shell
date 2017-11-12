@@ -482,3 +482,163 @@
 4 clear
 0 head builtin.h
 1 clear
+0 rm asd
+1 rm asd
+2 rm asd
+3 rm asd
+4 rm asd1
+5 list
+0 mkf slonica
+1 list
+2 rm textFile.txt
+3 list
+4 mkf slonica
+5 list
+6 rm slonica
+7 clear
+8 mkd commands
+9 mkd commands
+10 list
+11 mkd commands
+12 clear
+13 clear
+14 mkd test
+15 mkd testiranje
+16 cdir testiranje
+17 pwd
+18 mkf asd1
+19 move asd1 asd2
+20 list
+21 mkd slon
+22 move asd2 slon
+23 ls
+24 list
+25 move asd2 .
+26 move asd2 slon/asd2
+27 list
+28 cdir slon
+29 list
+30 cd ..
+31 cdir ..
+32 pwd
+33 list
+34 mkd slonica
+35 move slonica slon
+36 move slonica slon/slonica
+37 ls
+38 list
+39 cdir slon
+40 list
+41 list
+42 move slonica asd2
+43 ls
+44 list
+45 mkd asd3
+46 cdir asd3
+47 mkf asd1
+48 mkd asd2
+49 mkd asd3
+50 cdir ..
+51 move asd3 asd2
+52 list
+53 mkd asd3
+54 move asd3 asd2
+55 clear
+56 list
+57 pwd
+58 mkd asd2
+59 mkd asd3
+60 move asd2 asd3
+61 mkd asdf
+62 list
+63 move asdf asd3
+64 mkd asd4
+65 list
+66 move asd3 asd4
+67 list
+68 list asd4
+69 cd asd4
+70 cdir asd4
+71 list
+72 cdir ..
+73 list
+74 mkd asd3
+75 mkd asd3 asd4
+76 move asd3 asd4
+77 list
+78 mkd asd2
+79 move asd2 asd4
+80 list
+81 list asd4
+82 list
+83 clear
+84 mkd asd3
+85 cdir asd3
+0 cdir testiranje
+1 cdir slon
+2 pwd
+3 list
+4 cdir asd3
+5 list
+6 mkf asd2
+7 mkf asd3
+8 cdir ..
+9 mkd slonica
+10 cdir slonica 
+11 mkf asdf
+12 mkf asdfg
+13 list
+14 cdir ..
+15 clear
+16 list
+17 move asd3 slonica
+18 cdir slonica
+19 list
+20 cdir ..
+21 mkf asdfg
+22 list
+23 mkf asd
+24 move asdf asdfg
+25 clear
+26 exit
+0 cdir testiranje
+1 cdir slon
+2 list
+3 move asd asd1
+4 list
+5 move asd1 slonica/asd3
+6 list slonica
+7 cdir 
+8 cdir ..
+9 list
+10 cdir slon
+11 list
+12 rm asdfg
+13 rm slonica
+14 list slonica
+15 rm slonica/asdf
+16 rm slonica/asd3
+17 clear
+18 exit
+0 list
+1 cdir asd
+2 list
+3 copy asd1 asd3
+4 copy asd1 asd4
+5 mkd asddir
+6 copy asd3 asddir
+7 list
+8 copy asd3 asddir
+9 cdir asddir
+10 list
+11 copy asd3 asddir
+12 list
+13 list .
+14 list
+15 cdir ..
+16 pwd
+17 cdir ..
+18 list
+19 list
+20 list commands
+21 clear
