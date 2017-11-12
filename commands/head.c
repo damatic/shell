@@ -25,11 +25,24 @@ int main(int argc, char* argv[])
 {
 	int c;
 	FILE *file;
-	struct stat stbuf1;
+	struct stat stbuf1, stbuf2;
 	int limit = 10;
 	int count = 0;
+	int flag = 0;
 	
-	
+	if(fstat(3, &stbuf2) == 0){ // provjera ako je fd otvoren, stdin spojen na read kraj od pipe-a....
+		flag++;
+		if((file = fopen("head_temp", "w")) == NULL) // problem s EOF-om pa je zbog toga 'i' granica...
+			print_error(argv[0], "head_temp");
+			
+		while((c = getc(stdin)) != EOF ){
+			fprintf(file, "%c", c);
+		}
+		
+		fclose(file);
+		argv[1] = malloc(sizeof(char)*50);
+		strcpy(argv[1], "head_temp");
+	}
 	
 	if(stat(argv[1], &stbuf1) == -1){ // ako source file/dir ne postoji
 		print_error(argv[0], argv[1]);
@@ -45,7 +58,15 @@ int main(int argc, char* argv[])
 			putchar(c);
 		}
 	}
-	fclose(file);
+	if(flag == 1){ // ciscenje programa u slucaju da je bio pipe
+			free(argv[2]);
+			fclose(file);
+			if(remove("head_temp") == -1){
+				perror("cannot remove file 'head_temp'");
+			}
+	}else{
+		fclose(file);
+	}
 
 	return 0;
 }

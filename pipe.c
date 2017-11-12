@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-#include  <sys/types.h> // potrebno za fork()
+#include <sys/types.h> // potrebno za fork()
 #include <linux/limits.h> // potrebno za PATH_MAX
 #include <sys/wait.h> // potrebno za wait()
 

@@ -4,33 +4,55 @@
 #include <unistd.h>
 #include <string.h>
 #include <ctype.h>
+#include <linux/kdev_t.h>
+
+
+#define BUFFER_LENGTH 1024
+#define BUFFER_SIZE_FOR_NAMES 50
+
 
 int main()
 {
 	DIR *mydir;
 	FILE* fp;
 	struct dirent *myfile;
-	char buff[1024] = "/proc/";
-	
+	char buff[BUFFER_LENGTH] = "/proc/";
+	int pid;
+	char cmd[BUFFER_SIZE_FOR_NAMES];
+	char state;
+	char* token_cmd;
+	char ignore[BUFFER_SIZE_FOR_NAMES];
+	int tty_nr;
+	char str_tty[BUFFER_SIZE_FOR_NAMES];
+	//int starttime;
 	
     if ((mydir = opendir("/proc")) == NULL){
         perror("/proc");
         exit(1);
     }
 	
-	printf("%5s %s %11s %s\n", "PID", "TTY", "TIME", "CMD"); // formatiranje headera
+	printf("%5s %6s %s %7s\n", "PID", "TTY", "STATE", "COMMAND"); // formatiranje headera
 	
     while((myfile = readdir(mydir)) != NULL){ 	// otvaranje direktorija /proc
         if (isdigit(myfile->d_name[0])){ 		// provjera je li prvi znak broj
-			printf("%5s", myfile->d_name);		// ispis imena odnosno PID procesa
-			printf(" ?");
-			printf("%14s", "00:00:00");			// hardcode time, ne radi
-			strcat(buff, myfile->d_name);		// 
-			strcat(buff, "/comm");				// rezultat spajanja putanje /proc/PID/comm gdje se nalazi naziv naredbe
-			
+			strcat(buff, myfile->d_name);		
+			strcat(buff, "/stat");				// rezultat spajanja putanje /proc/PID/comm gdje se nalazi naziv naredbe
 			fp = fopen(buff, "r");
-			fscanf(fp, "%s", buff);
-			printf(" %s\n", buff);
+			fscanf(fp, "%d %s %c %s %s %s %d", &pid, cmd, &state, ignore, ignore, ignore, &tty_nr);
+			token_cmd = strtok(cmd, "()");
+			
+			printf("%5d", pid);
+			
+			if(MAJOR(tty_nr) == 0){				// izdvajanje bitova za osnovni uređaj pts, tty...
+				printf(" %6s", "?");
+			}else{
+				sprintf(str_tty, "%d:%d", MAJOR(tty_nr), MINOR(tty_nr));
+				printf(" %6s", str_tty);
+			}
+			printf(" %c", state);
+			
+			printf("     %s\n", token_cmd);
+			
 			fclose(fp);
         }
 		strcpy(buff, "/proc/");					// postavljanje na pocetno buff

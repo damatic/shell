@@ -13,13 +13,13 @@ Ljuska trenutno ima 13 vlastitih programa koje može izvršiti a to su:
 - copy - kopiranje datoteka ("u izradi rekurzivno kopiranje direktorija koji nije prazan")
 - list - ispis sadržaja direktorija, ispisuje većinu informacija ("u izradi list program s argumentima za sažeto i detaljno ispisivanje")
 - mkd - stvaranje novog direktorija
-- move - premještanje direktorija na neko drugo mjesto ("reukrzivno nije zavrseno")
+- move - premještanje direktorija na neko drugo mjesto ("rekurzivno nije zavrseno")
 - rm - brisanje datoteka ("u izradi rekurzivno brisanje skupa datoteka")
 - wc - ispis znakova/riječi/linija neke datoteke
-- ps - ispis nekih informacija o trenutnim procesima, zasad rade samo ispis PID i CMD
+- ps - ispis nekih informacija o trenutnim procesima, kao sto su PID, STATE, TTY i COMMAND
 - kill - ubijanje procesa sa signalom SIGTERM ne sa SIGMKILL
 - pipe - usmjeravanje izlaza jednog programa na ulaz drugoga
-- head - ispis prvih 10 linija iz datoteke
+- head - ispis prvih 10 linija iz datoteke, moguce i preko pipe-a
 
 
 Builtin programi/funkcije ljuske:

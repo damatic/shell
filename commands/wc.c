@@ -31,7 +31,6 @@ int main(int argc, char* argv[])
 	struct stat stbuf1, stbuf2;
 	int count = 0;
 	char word[128];
-	int i = 0;
 	int flag = 0;
 	
 	if(argv[1][0] != '-'){
@@ -45,7 +44,6 @@ int main(int argc, char* argv[])
 			
 		while((c = getc(stdin)) != EOF ){
 			fprintf(file, "%c", c);
-			i++;
 		}
 		
 		fclose(file);

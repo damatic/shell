@@ -21,7 +21,6 @@
 
 int main(int argc, char* argv[])
 {
-	
 	DIR *mydir;
     struct dirent *myfile;
     struct stat mystat;
