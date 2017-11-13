@@ -22,6 +22,8 @@
 #include "pipe.h"
 #include "readerParser.h"
 
+#include <readline/readline.h>
+#include <readline/history.h>
 
 #define BUFFER_LENGTH 1024
 #define BUFFER_SIZE_FOR_NAMES 50
@@ -29,19 +31,35 @@
 
 int main()
 {
-	init* data;	
+	init* data;
+	
+	//rl_bind_key('\t', rl_abort);//disable auto-complete
 	
 	while(1){
 		while(1){
 			data = init_shell();
 			init_hostname(data->hostname, data->hostname_file);
-		
-			printf("%s@%s >> ", data->username, name(data->hostname_file));
 			
-			if (fgets(data->line, BUFFER_LENGTH, stdin) == 0){ // u slucaju da je ^D End-Of-File
+			sprintf(data->buffer_prompt, "%s@%s >> ", data->username, name(data->hostname_file)); // prompt - matic@slash >> 
+			
+			/*if (fgets(data->line, BUFFER_LENGTH, stdin) == 0){ // u slucaju da je ^D End-Of-File
+				printf("exit\n");
+				return 1;
+			}*/
+			if (data->line){
+				free (data->line);
+				data->line = (char *)NULL;
+			}
+			
+			data->line = readline(data->buffer_prompt); // inicijalizacija readline programa
+			
+			if (data->line[0] == EOF){ // u slucaju da je ^D End-Of-File
 				printf("exit\n");
 				return 1;
 			}
+			
+			if (data->line && *(data->line)) // sprema povijest naredbi, sve razlicito od prazne linije
+				add_history(data->line);
 			
 			strcpy(data->temp_buffer, data->line);
 			if (strtok(data->temp_buffer, " \t\n") == NULL) { // prazna komanda
@@ -96,10 +114,11 @@ int main()
 			}
 			
 			if(data->pid == 0){ // child process
-				if (execvp(data->program_path, data->argv1) == -1){
-						printf("ERRNO: %s\n", strerror(errno));
-						exit(1);
+				if(execvp(data->program_path, data->argv1) == -1){
+					printf("ERRNO: %s\n", strerror(errno));
+					exit(1);
 				}
+
 			}else{ // parrent process
 			// cekanje da dijete proces zavrsi sa dodatnim informacijama, pomocu MACRO-a provjera
 				//wait(&child_status);
@@ -108,6 +127,9 @@ int main()
 			}
 		}
 	}
+	
+	free(data->line);
+	
 	return 0;
 }
 

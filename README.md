@@ -20,7 +20,7 @@ Ljuska trenutno ima 13 vlastitih programa koje može izvršiti a to su:
 - kill - ubijanje procesa sa signalom SIGTERM ne sa SIGMKILL
 - pipe - usmjeravanje izlaza jednog programa na ulaz drugoga
 - head - ispis prvih 10 linija iz datoteke, moguce i preko pipe-a
-
+- smart completion - zavrsavanje imena datoteka/direktorija pomocu tab-a
 
 Builtin programi/funkcije ljuske:
 - exit - izlazak iz ljuske
@@ -28,9 +28,8 @@ Builtin programi/funkcije ljuske:
 - clear - čišćenje čitavog ekrana
 - pwd - isis trenutne putanje
 - cdir - promjena trenutne putanje
-- history - spremanje naredbi u datoteku ("poboljsati brojac koji broji naredbe")
+- history - spremanje naredbi u datoteku, moguce pregledavanje povijesti s strelicom za gore i dolje ("poboljsati brojac koji broji naredbe")
 
 
 U izradi su i sljedeći programi i dodaci:
 - background process - stavljanje procesa u pozadinu...
-- smart completion - nekakav način za pametno završavanje imena datoteka, direktorija...

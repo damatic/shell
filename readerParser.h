@@ -12,7 +12,7 @@ typedef struct init{
 	char hostname_file[PATH_MAX];
 	char hostname[BUFFER_SIZE_FOR_NAMES];
 	char username[BUFFER_SIZE_FOR_NAMES];
-	char line[BUFFER_LENGTH];
+	//char line[BUFFER_LENGTH];
 	char* argv1[BUFFER_SIZE_FOR_NAMES];
 	char* argv2[BUFFER_SIZE_FOR_NAMES];
 	char* token;
@@ -24,6 +24,8 @@ typedef struct init{
 	unsigned count_pipe;
 	char temp_buffer[BUFFER_LENGTH];
 	pid_t pid;
+	char* line;
+	char buffer_prompt[BUFFER_LENGTH];
 }init;
 
 init* init_shell();

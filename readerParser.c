@@ -14,7 +14,7 @@ init* init_shell()  // init data
 	strcpy(data->hostname_file, "/home/matic/shell/hostname_test");
 	strcpy(data->hostname, "slash");
 	strcpy(data->username, "matic");
-	data->line[0] = '\0';
+	//data->line[0] = readline(NULL);
 	
 	return data;
 }
