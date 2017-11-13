@@ -24,7 +24,7 @@ char* readLineCommand(void)
 	return NULL;
 }
 
-void parseCommandAndExecute(char* commandLine)
+void parseCommandAndExecute(const char* commandLine)
 {
 
 }

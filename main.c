@@ -29,7 +29,7 @@
 
 int main()
 {
-	init* data;
+	init* data;	
 	
 	while(1){
 		while(1){
@@ -62,7 +62,7 @@ int main()
 				break;
 			}
 			
-			data->token = strtok(data->line, " \n\t()<>&;");
+			data->token = strtok(data->line, " \n\t()<>;");
 			while(data->token != NULL && data->argc1 < 256 && data->argc2 < 256){
 				if(strcmp(data->token, "|") == 0){
 					data->count_pipe = 1;
@@ -76,7 +76,7 @@ int main()
 						data->argc2++;
 					}
 				}
-				data->token = strtok(NULL, " \n\t()<>&;"); // " \n\t()<>|&;" znakovi koje "ignorira"
+				data->token = strtok(NULL, " \n\t()<>;"); // " \n\t()<>|&;" znakovi koje "ignorira"
 			}
 
 			if(data->count_pipe > 0){
@@ -90,7 +90,6 @@ int main()
 			
 			data->argv1[data->argc1] = NULL; // potrebno zbog execvp, da se zna gdje je kraj niza argumenata
 			strcat(data->program_path, data->argv1[0]); // spajanje putanje gdje se nalaze programi i samog imena programa
-
 			if((data->pid = fork()) == -1){
 				cleaning(data);
 				break;
@@ -103,8 +102,8 @@ int main()
 				}
 			}else{ // parrent process
 			// cekanje da dijete proces zavrsi sa dodatnim informacijama, pomocu MACRO-a provjera
-				wait(NULL);  // wait(&child_status); 
-				//printf("Child exited\n");
+				//wait(&child_status);
+				wait(NULL);
 				cleaning(data);
 			}
 		}

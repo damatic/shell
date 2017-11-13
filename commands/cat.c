@@ -4,7 +4,7 @@
 #include <string.h>
 #include <sys/stat.h>
 
-void print_error(char *this, char *filename)
+void print_error(const char *this, const char *filename)
 {	// u slucaju da radnja ne uspije iz nekog razloga
 	// this ce biti ime komande
 	fprintf(stderr, "%s: cannot print '%s' to terminal\n"
@@ -13,7 +13,7 @@ void print_error(char *this, char *filename)
 	exit(EXIT_FAILURE);
 }
 
-void print_usage(char *this)
+void print_usage(const char *this)
 {	// u slucaju da nije sintaksno tocno
 	fprintf(stderr, "SYNTAX ERROR: \n"
 	"USAGE %s [source]\n", this);
@@ -25,9 +25,9 @@ int main(int argc, char* argv[])
 {
 	int c;
 	FILE *file;
-	struct stat stbuf1;
+	struct stat stbuf;
 	
-	if(stat(argv[1], &stbuf1) == -1){ // ako source file/dir ne postoji
+	if(stat(argv[1], &stbuf) == -1){ // ako source file/dir ne postoji
 		print_error(argv[0], argv[1]);
 		return EXIT_FAILURE;
 	}

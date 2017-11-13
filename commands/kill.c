@@ -7,7 +7,7 @@
 #include <signal.h>
 
 
-void print_error(char *this, char *filename)
+void print_error(const char *this, const char *filename)
 {	// u slucaju da radnja ne uspije iz nekog razloga
 	// this ce biti ime komande
 	fprintf(stderr, "%s: cannot terminate process with PID: %s\n"
@@ -16,7 +16,7 @@ void print_error(char *this, char *filename)
 	exit(EXIT_FAILURE);
 }
 
-void print_usage(char *this)
+void print_usage(const char *this)
 {	// u slucaju da nije sintaksno tocno
 	fprintf(stderr, "SYNTAX ERROR: \n"
 	"USAGE %s [PID]\n", this);

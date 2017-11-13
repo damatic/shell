@@ -642,3 +642,25 @@
 19 list
 20 list commands
 21 clear
+0 list &
+0 list
+0 list
+0 list
+0 list &
+0 list &
+0 list &
+0 list &
+0 list
+0 list &
+0 echo $PATH
+1 clear
+0 list | head
+0 list . | head
+0 list | head
+1 clear
+0 list | head
+0 list | head
+1 clear
+0 list
+1 list commands
+2 clear

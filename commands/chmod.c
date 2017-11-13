@@ -9,7 +9,7 @@
 
 #define BUFFER_LENGTH 1024
 
-void print_error(char *this, char *filename)
+void print_error(const char *this, const char *filename)
 {	// u slucaju da radnja ne uspije iz nekog razloga
 	// this ce biti ime komande
 	fprintf(stderr, "%s: cannot change permission mode for '%s'\n"
@@ -18,7 +18,7 @@ void print_error(char *this, char *filename)
 	exit(EXIT_FAILURE);
 }
 
-void print_usage(char *this)
+void print_usage(const char *this)
 {	// u slucaju da nije sintaksno tocno
 	fprintf(stderr, "SYNTAX ERROR: \n"
 	"USAGE %s [mode] [filename]\n", this);
@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
 {
     char mode_buffer[BUFFER_LENGTH];
     char buf[PATH_MAX];
-    int i;
+    int mode_octal;
 	
 	if(argv[1] == NULL || argv[2] == NULL){
 		print_usage(argv[0]);
@@ -39,11 +39,11 @@ int main(int argc, char* argv[])
 	strcpy(mode_buffer, argv[1]);
 	strcpy(buf, argv[2]);
 	
-    if((i = strtol(mode_buffer, 0, 8)) == 0){
+    if((mode_octal = strtol(mode_buffer, 0, 8)) == 0){
 		print_error(argv[0], argv[2]);
 	}
 	
-    if (chmod(buf, i) == -1){
+    if (chmod(buf, mode_octal) == -1){
 		print_error(argv[0], argv[2]);
     }
 	

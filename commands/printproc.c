@@ -12,7 +12,7 @@
 #define BUFFER_SIZE_FOR_NAMES 50
 
 
-void print_error(char *this)
+void print_error(const char *this)
 {	// u slucaju da radnja ne uspije iz nekog razloga
 	// this ce biti ime komande
 	fprintf(stderr, "%s: cannot list informations about processes\n"
@@ -21,7 +21,7 @@ void print_error(char *this)
 	exit(EXIT_FAILURE);
 }
 
-void print_usage(char *this)
+void print_usage(const char *this)
 {	// u slucaju da nije sintaksno tocno
 	fprintf(stderr, "SYNTAX ERROR: \n"
 	"USAGE %s\n", this);

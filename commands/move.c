@@ -7,7 +7,7 @@
 #include <errno.h>
 #include <linux/limits.h>
 
-void print_error(char *this, char *filename1, char *filename2)
+void print_error(const char *this, const char *filename1, const char *filename2)
 {	// u slucaju da radnja ne uspije iz nekog razloga
 	// this ce biti ime komande
 	fprintf(stderr, "%s: cannot move '%s' to '%s'\n"
@@ -16,7 +16,7 @@ void print_error(char *this, char *filename1, char *filename2)
 	exit(EXIT_FAILURE);
 }
 
-void print_usage(char *this)
+void print_usage(const char *this)
 {	// u slucaju da nije sintaksno tocno
 	fprintf(stderr, "SYNTAX ERROR: \n"
 	"USAGE %s [filename1] [filename2]\n", this);

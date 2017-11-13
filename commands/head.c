@@ -4,7 +4,7 @@
 #include <string.h>
 #include <sys/stat.h>
 
-void print_error(char *this, char *filename)
+void print_error(const char *this, const char *filename)
 {	// u slucaju da radnja ne uspije iz nekog razloga
 	// this ce biti ime komande
 	fprintf(stderr, "%s: cannot print 10 lines of '%s' to terminal\n"
@@ -13,7 +13,7 @@ void print_error(char *this, char *filename)
 	exit(EXIT_FAILURE);
 }
 
-void print_usage(char *this)
+void print_usage(const char *this)
 {	// u slucaju da nije sintaksno tocno
 	fprintf(stderr, "SYNTAX ERROR: \n"
 	"USAGE %s [OPTION] [source]\n", this);
@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
 	int c;
 	FILE *file;
 	struct stat stbuf1, stbuf2;
-	int limit = 10;
+	const int limit = 10;
 	int count = 0;
 	int flag = 0;
 	
@@ -58,7 +58,6 @@ int main(int argc, char* argv[])
 		}
 	}
 	if(flag == 1){ // ciscenje programa u slucaju da je bio pipe
-			free(argv[2]);
 			fclose(file);
 			if(remove("head_temp") == -1){
 				perror("cannot remove file 'head_temp'");

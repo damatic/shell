@@ -23,7 +23,7 @@
 // ls -a imena i . i .. bez dozvola itd
 
 
-void print_error(char *this, char *filename)
+void print_error(const char *this, const char *filename)
 {	// u slucaju da radnja ne uspije iz nekog razloga
 	// this ce biti ime komande
 	fprintf(stderr, "%s: cannot list directory '%s'\n"
@@ -32,7 +32,7 @@ void print_error(char *this, char *filename)
 	exit(EXIT_FAILURE);
 }
 
-void print_usage(char *this)
+void print_usage(const char *this)
 {	// u slucaju da nije sintaksno tocno
 	fprintf(stderr, "SYNTAX ERROR: "
 	"USAGE %s [path]\n", this);
@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
 {
 	DIR *mydir;
     struct dirent *myfile;
-    struct stat mystat;
+    struct stat stbuf;
 	char buf[BUFFER_LENGTH];
 	char* last_modif_date;
 	struct tm tm;
@@ -63,35 +63,35 @@ int main(int argc, char* argv[])
     while((myfile = readdir(mydir)) != NULL){
     	if(myfile->d_name[0] != '.'){
 			sprintf(buf, "%s/%s", argv[1], myfile->d_name);
-		    stat(buf, &mystat);
+		    stat(buf, &stbuf);
 
 		    // dozvole nad datotekama
 		    //printf("%o\t", mystat.st_mode & S_IWGRP);
-		    printf( (mystat.st_mode & S_IRUSR) ? "r" : "-"); // vrati 400
-		    printf( (mystat.st_mode & S_IWUSR) ? "w" : "-"); // vrati 200 itd
-		    printf( (mystat.st_mode & S_IXUSR) ? "x" : "-"); // vrati 0 ako nema dozvole
-		    printf( (mystat.st_mode & S_IRGRP) ? "r" : "-");
-		    printf( (mystat.st_mode & S_IWGRP) ? "w" : "-");
-		    printf( (mystat.st_mode & S_IXGRP) ? "x" : "-");
-		    printf( (mystat.st_mode & S_IROTH) ? "r" : "-");
-		    printf( (mystat.st_mode & S_IWOTH) ? "w" : "-");
-		    printf( (mystat.st_mode & S_IXOTH) ? "x" : "-");
+		    printf( (stbuf.st_mode & S_IRUSR) ? "r" : "-"); // vrati 400
+		    printf( (stbuf.st_mode & S_IWUSR) ? "w" : "-"); // vrati 200 itd
+		    printf( (stbuf.st_mode & S_IXUSR) ? "x" : "-"); // vrati 0 ako nema dozvole
+		    printf( (stbuf.st_mode & S_IRGRP) ? "r" : "-");
+		    printf( (stbuf.st_mode & S_IWGRP) ? "w" : "-");
+		    printf( (stbuf.st_mode & S_IXGRP) ? "x" : "-");
+		    printf( (stbuf.st_mode & S_IROTH) ? "r" : "-");
+		    printf( (stbuf.st_mode & S_IWOTH) ? "w" : "-");
+		    printf( (stbuf.st_mode & S_IXOTH) ? "x" : "-");
 		    
-		    printf(" %ld", mystat.st_nlink); // broj veza
+		    printf(" %ld", stbuf.st_nlink); // broj veza
 		    
-			pwd = getpwuid(mystat.st_uid);
+			pwd = getpwuid(stbuf.st_uid);
 		    printf(" %s", pwd->pw_name); // ID of the owner of the file
 		    
-			grp = getgrgid(mystat.st_gid);
+			grp = getgrgid(stbuf.st_gid);
 		    printf(" %s", grp->gr_name); // ID of the group owner of the file
 		    
 		    // velicina datoteke
-		    printf(" %ld",mystat.st_size);
+		    printf(" %ld",stbuf.st_size);
 		    
 		    // vrijeme zadnje promjene
 			char buffer[125];
 			
-			last_modif_date = ctime(&mystat.st_mtime);
+			last_modif_date = ctime(&stbuf.st_mtime);
 			
 			strptime(last_modif_date, "%a %b %d %H:%M:%S %Y", &tm);
 			strftime(buffer, 125, "%b %d %H:%M", &tm);

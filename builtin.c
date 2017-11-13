@@ -7,7 +7,7 @@
 #define BUFFER_SIZE_FOR_NAMES 124
 #define ARGUMENT_SIZE 50
 
-int init_hostname(char* hostname, char* filename)
+int init_hostname(const char* hostname, const char* filename)
 {
 	FILE* fp;
 	
@@ -50,7 +50,7 @@ void echo(char* argv[]) // echo sa ispisom systemskih varijabli
 	}
 }
 
-char* name(char* hostname_file)
+char* name(const char* hostname_file)
 {
 	FILE * fp;
 	char* hostname;
@@ -69,7 +69,7 @@ char* name(char* hostname_file)
 	return hostname;
 }
 
-int cdir(char* path)
+int cdir(const char* path)
 {
 	if(chdir(path) == -1){
 		fprintf(stderr, "ERROR: %s\n", strerror(errno));
@@ -95,7 +95,7 @@ void clear_terminal()
 	printf("\033c");
 }
 
-void history_shell(char* cmd) // dodati za brisanje citave povijesti...
+void history_shell(const char* cmd) // dodati za brisanje citave povijesti...
 {
 	FILE* fd;
 	static int count = 0;
@@ -113,7 +113,7 @@ void history_shell(char* cmd) // dodati za brisanje citave povijesti...
 	fclose(fd);
 }
 
-int check_builtin(char *line)
+int check_builtin(char* line)
 {
 	char *argv[ARGUMENT_SIZE];
 	int argc = 0;

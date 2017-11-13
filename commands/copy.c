@@ -9,7 +9,7 @@
 
 #define BUFFER_LENGTH 1024
 
-void print_error(char *this, char *src_filename, char *dest_filename)
+void print_error(const char *this, const char *src_filename, const char *dest_filename)
 {	// u slucaju da radnja ne uspije iz nekog razloga
 	// this ce biti ime komande
 	fprintf(stderr, "%s: cannot copy '%s' to '%s'\n"
@@ -18,7 +18,7 @@ void print_error(char *this, char *src_filename, char *dest_filename)
 	exit(EXIT_FAILURE);
 }
 
-void print_usage(char *this)
+void print_usage(const char *this)
 {	// u slucaju da nije sintaksno tocno
 	fprintf(stderr, "SYNTAX ERROR: \n"
 	"USAGE %s [source] [destination]\n", this);
@@ -26,7 +26,7 @@ void print_usage(char *this)
 	exit(EXIT_FAILURE);
 }
 
-void copyFile(char* src_file, char* dest_file) // kopiranje datoteka
+void copyFile(const char* src_file, char* dest_file) // kopiranje datoteka
 {
 	FILE *fd_src;
 	FILE *fd_dest;
@@ -60,7 +60,7 @@ void copyFile(char* src_file, char* dest_file) // kopiranje datoteka
 
 }
 
-void copyDirectory(char* src_dir, char* dest_dir) 		// kopiranje direktorija - rekurzivno
+void copyDirectory(const char* src_dir, char* dest_dir) 		// kopiranje direktorija - rekurzivno
 {
 	printf("Direktorij nije prazan\n");
 }
@@ -68,13 +68,11 @@ void copyDirectory(char* src_dir, char* dest_dir) 		// kopiranje direktorija - r
 int main(int argc, char* argv[])
 {	
 	char buffer[PATH_MAX];
-	struct stat stbuf1;
-	struct stat stbuf2;
+	struct stat stbuf1, stbuf2;
 	
 	if(stat(argv[1], &stbuf1) == -1){ 					// ako source file/dir ne postoji
 		print_error(argv[0], argv[1], argv[2]);
 	}
-	
 	
 	if((stbuf1.st_mode & S_IFMT) == S_IFREG){
 		if((stat(argv[2], &stbuf2) == 0) && (stbuf2.st_mode & S_IFMT) == S_IFREG){ // ako je src datoteka

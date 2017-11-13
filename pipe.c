@@ -20,7 +20,7 @@ void execArgsPiped(char* parsed[], char* parsedpipe[])
         perror("\nPipe could not be initialized!\n");
         return;
     }
-
+	
     if ((pid1 = fork()) == -1) {
         perror("\nfork() failed\n");
         return;

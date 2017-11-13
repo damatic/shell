@@ -5,7 +5,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-void print_error(char *this, char *filename)
+void print_error(const char *this, const char *filename)
 {	// u slucaju da radnja ne uspije iz nekog razloga
 	// this ce biti ime komande
 	fprintf(stderr, "%s: file '%s' cannot be deleted\n"
@@ -14,7 +14,7 @@ void print_error(char *this, char *filename)
 	exit(EXIT_FAILURE);
 }
 
-void print_usage(char *this)
+void print_usage(const char *this)
 {	// u slucaju da nije sintaksno tocno
 	fprintf(stderr, "SYNTAX ERROR: \n"
 	"USAGE %s [FILE]\n", this);
@@ -22,7 +22,7 @@ void print_usage(char *this)
 	exit(EXIT_FAILURE);
 }
 
-void brisanje_direktorija(char* path) // za prazne direktorije
+void brisanje_direktorija(const char* path) // za prazne direktorije
 {	
 	if(rmdir(path) == -1 && errno == ENOTEMPTY){
 		print_error("rm", path);

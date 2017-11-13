@@ -1,17 +1,17 @@
-int init_hostname(char* hostname, char* filename);
+int init_hostname(const char* hostname, const char* filename);
 
 int exit_shell();
 
 int echo(char* line);
 
-char* name(char* hostname_file);
+char* name(const char* hostname_file);
 
-int cdir(char* path);
+int cdir(const char* path);
 
 int pwd();
 
 int clear_terminal();
 
-int history_shell(char* cmd);
+int history_shell(const char* cmd);
 
-int check_builtin(char *line);
+int check_builtin(char* line);

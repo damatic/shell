@@ -30,7 +30,7 @@ init* init_shell();
 
 char* readLineCommand(void);
 
-void parseCommand(char* commandLine);
+void parseCommand(const char* commandLine);
 
 int parseInfo();
 
