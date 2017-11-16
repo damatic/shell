@@ -13,7 +13,7 @@ void print_error(const char *this, const char *src_filename, const char *dest_fi
 {	// u slucaju da radnja ne uspije iz nekog razloga
 	// this ce biti ime komande
 	fprintf(stderr, "%s: cannot copy '%s' to '%s'\n"
-	"error: %s\n", this, src_filename, dest_filename, strerror(errno));
+					"ERROR: %s\n", this, src_filename, dest_filename, strerror(errno));
 	
 	exit(EXIT_FAILURE);
 }
@@ -21,7 +21,7 @@ void print_error(const char *this, const char *src_filename, const char *dest_fi
 void print_usage(const char *this)
 {	// u slucaju da nije sintaksno tocno
 	fprintf(stderr, "SYNTAX ERROR: \n"
-	"USAGE %s [source] [destination]\n", this);
+					"USAGE %s [source] [destination]\n", this);
 	
 	exit(EXIT_FAILURE);
 }

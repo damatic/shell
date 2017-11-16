@@ -30,11 +30,11 @@ ps: printproc.c
 kill: kill.c
 	gcc -Wall kill.c -o kill
 	
-head: head.c
-	gcc -Wall head.c -o head
+head: headproc.c
+	gcc -Wall headproc.c -o head
 
 mkf: mkf.c
 	gcc -Wall mkf.c -o mkf
 
-clean: copy list mkd move cat chmod wc rm ps kill head mkf
+clean:
 	rm -r copy list mkd move cat chmod wc rm ps kill head mkf

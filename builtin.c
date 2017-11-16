@@ -7,20 +7,6 @@
 #define BUFFER_SIZE_FOR_NAMES 124
 #define ARGUMENT_SIZE 50
 
-int init_hostname(const char* hostname, const char* filename)
-{
-	FILE* fp;
-	
-	if((fp = fopen(filename, "w")) == NULL)
-		return EXIT_FAILURE;
-	
-	fprintf(fp, "%s\n", hostname);
-
-	fclose(fp);
-
-	return 0;
-}
-
 void exit_shell()
 {
 	printf("shell exited\n");
@@ -48,25 +34,6 @@ void echo(char* argv[]) // echo sa ispisom systemskih varijabli
 		}
 		printf("\n");
 	}
-}
-
-char* name(const char* hostname_file)
-{
-	FILE * fp;
-	char* hostname;
-
-	hostname = (char*)malloc(BUFFER_SIZE_FOR_NAMES * sizeof(char));
-
-	if((fp = fopen(hostname_file, "r")) == NULL)
-		return (char*)(EXIT_FAILURE);
-	
-	fgets(hostname, BUFFER_SIZE_FOR_NAMES, fp);
-	
-	hostname[strcspn(hostname, "\n")] = 0;
-	
-	fclose(fp);
-
-	return hostname;
 }
 
 int cdir(const char* path)
@@ -98,20 +65,45 @@ void clear_terminal()
 void history_shell(const char* cmd) // dodati za brisanje citave povijesti...
 {
 	FILE* fd;
-	static int count = 0;
 	
 	if((fd = fopen("/home/matic/shell/history", "a")) == NULL){
 		printf("Cannot open history file!\n");
 		return;
 	}
 	
-	if(fprintf(fd, "%d %s", count++, cmd) < 0){
+	if(fprintf(fd, "%s\n", cmd) < 0){
 		printf("Cannot print commands in history file!\n");
 		return;
 	}
 	
 	fclose(fd);
 }
+
+void print_history() // dodati za brisanje citave povijesti...
+{
+	FILE* fd;
+	int count_commands = 0;
+	int c;
+	
+	if((fd = fopen("/home/matic/shell/history", "r")) == NULL){
+		printf("Cannot open history file fore reading!\n");
+		return;
+	}
+	
+	printf("%d ", count_commands);
+	while((c = getc(fd)) != EOF){
+		if(c == '\n'){
+			putchar(c);
+			printf("%d ", ++count_commands);
+		}else{
+			putchar(c);
+		}
+	}
+	putchar('\n');
+	
+	fclose(fd);
+}
+
 
 int check_builtin(char* line)
 {
@@ -133,6 +125,9 @@ int check_builtin(char* line)
 		return 1;
 	}else if(strcmp(line, "cdir") == 0){
 		cdir(argv[1]);
+		return 1;
+	}else if(strcmp(line, "ph") == 0){
+		print_history();
 		return 1;
 	}else if(strcmp(line, "pwd") == 0){
 		pwd();

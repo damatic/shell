@@ -27,7 +27,7 @@ void print_error(const char *this, const char *filename)
 {	// u slucaju da radnja ne uspije iz nekog razloga
 	// this ce biti ime komande
 	fprintf(stderr, "%s: cannot list directory '%s'\n"
-	"error: %s\n", this, filename, strerror(errno));
+					"ERROR: %s\n", this, filename, strerror(errno));
 	
 	exit(EXIT_FAILURE);
 }
@@ -35,7 +35,7 @@ void print_error(const char *this, const char *filename)
 void print_usage(const char *this)
 {	// u slucaju da nije sintaksno tocno
 	fprintf(stderr, "SYNTAX ERROR: "
-	"USAGE %s [path]\n", this);
+					"USAGE %s [path]\n", this);
 	
 	exit(EXIT_FAILURE);
 }

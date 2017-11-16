@@ -11,7 +11,7 @@ void print_error(const char *this, const char *filename1, const char *filename2)
 {	// u slucaju da radnja ne uspije iz nekog razloga
 	// this ce biti ime komande
 	fprintf(stderr, "%s: cannot move '%s' to '%s'\n"
-	"error: %s\n", this, filename1, filename2, strerror(errno));
+					"ERROR: %s\n", this, filename1, filename2, strerror(errno));
 	
 	exit(EXIT_FAILURE);
 }
@@ -19,7 +19,7 @@ void print_error(const char *this, const char *filename1, const char *filename2)
 void print_usage(const char *this)
 {	// u slucaju da nije sintaksno tocno
 	fprintf(stderr, "SYNTAX ERROR: \n"
-	"USAGE %s [filename1] [filename2]\n", this);
+					"USAGE %s [filename1] [filename2]\n", this);
 	
 	exit(EXIT_FAILURE);
 }

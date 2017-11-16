@@ -10,7 +10,7 @@ void print_error(const char *this, const char *filename)
 {	// u slucaju da radnja ne uspije iz nekog razloga
 	// this ce biti ime komande
 	fprintf(stderr, "%s: cannot count chars/words/lines in '%s'\n"
-	"ERROR: %s\n", this, filename, strerror(errno));
+					"ERROR: %s\n", this, filename, strerror(errno));
 	
 	exit(EXIT_FAILURE);
 }
@@ -18,7 +18,7 @@ void print_error(const char *this, const char *filename)
 void print_usage(const char *this)
 {	// u slucaju da nije sintaksno tocno
 	fprintf(stderr, "SYNTAX ERROR: \n"
-	"USAGE %s [OPTION] [FILE]\n", this);
+					"USAGE %s [OPTION] [FILE]\n", this);
 	
 	exit(EXIT_FAILURE);
 }
@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
 		print_usage(argv[0]);
 	}
 	
-	if(fstat(3, &stbuf2) == 0){ // provjera ako je fd otvoren, stdin spojen na read kraj od pipe-a....
+	if(fstat(3, &stbuf2) == 0 && argv[1] == NULL){ // provjera ako je fd otvoren, stdin spojen na read kraj od pipe-a....
 		flag++;
 		if((file = fopen("pipe_temp", "w")) == NULL) // problem s EOF-om pa je zbog toga 'i' granica...
 			print_error(argv[0], "pipe_temp");
