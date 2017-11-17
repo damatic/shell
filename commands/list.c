@@ -23,6 +23,7 @@
 // ls -all imena, dozvole, veze, vlasnici sa . i ..
 // ls -a imena i . i .. bez dozvola itd
 
+// impelemtacija list naredbe bez primanja dodatnih argumenata
 
 void print_error(const char *this, const char *filename)
 {	// u slucaju da radnja ne uspije iz nekog razloga
@@ -90,14 +91,14 @@ int main(int argc, char* argv[])
 		    printf(" %ld",stbuf.st_size);
 		    
 		    // vrijeme zadnje promjene
-			char buffer[125];
+			char buffer[BUFFER_LENGTH];
 			
 			last_modif_date = ctime(&stbuf.st_mtime);
 			
 			strptime(last_modif_date, "%a %b %d %H:%M:%S %Y", &tm);
-			strftime(buffer, 125, "%b %d %H:%M", &tm);
+			strftime(buffer, BUFFER_LENGTH, "%b %d %H:%M", &tm);
 		    //printf("mjesec %d ", tm.tm_mon + 1);
-			printf("\t%s", buffer); // potrebno popraviti..##########POPRAVKA##########
+			printf("\t%s", buffer);
 		    
 		    // ime datoteke
 		    printf(" %s\n", myfile->d_name);

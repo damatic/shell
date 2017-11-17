@@ -31,6 +31,7 @@ init* init_shell()
 	init* data;
 	
 	data = (init*)malloc(sizeof(init));
+	
 	strcpy(data->program_path, getenv("HOME"));
 	strcat(data->program_path, "/shell/obj_output/");
 	data->username = getenv("USER");
@@ -59,8 +60,8 @@ char* readLineCommand(init* data)
 	}
 	
 	if (line && *(line)){ // sprema povijest naredbi, sve razlicito od prazne linije
-		add_history(line);
-		history_shell(line);
+		add_history(line); // history iz readline biblioteke
+		history_shell(line); // vlastit history
 	}
 	
 	return line;
@@ -84,7 +85,7 @@ int parseCommand(init* data, char* line)
 		return 2; //break;
 	}
 	
-	strcpy(line_builtin, line); // posebno za builtin programe, da ne dira izvorni string
+	strcpy(line_builtin, line); // posebno za builtin programe, da ne dira izvorni string u slucaju da nije nasao builtin program/funkciju
 	if(check_builtin(line_builtin) == 1){
 		cleaning(data);
 		return 2; //break;
@@ -104,7 +105,7 @@ int parseCommand(init* data, char* line)
 				argc2++;
 			}
 		}
-		token = strtok(NULL, " \n\t()<>;"); // " \n\t()<>|&;" znakovi koje "ignorira"
+		token = strtok(NULL, " \n\t()<>;"); // " \n\t()<>&;" znakovi koje "ignorira"
 	}
 	
 	if(count_pipe > 0){
@@ -135,14 +136,13 @@ int executeCommand(init* data, char* argv[])
 		return 1; //break;
 	}
 	
-	if(pid == 0){ // child process
+	if(pid == 0){ // child
 		if(execvp(data->program_path, argv) == -1){
 			printf("ERRNO: %s\n", strerror(errno));
 			exit(1);
 		}
-	}else{ // parrent process
-		// cekanje da dijete proces zavrsi sa dodatnim informacijama, pomocu MACRO-a provjera
-		//wait(&child_status);
+	}else{ // parrent
+		//wait(&child_status); // cekanje da dijete proces zavrsi sa dodatnim informacijama, pomocu MACRO-a provjera
 		wait(NULL);
 		cleaning(data);
 	}

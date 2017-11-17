@@ -144,3 +144,5 @@ pwd
 list | head
 list | head
 list | head builtin.c
+list
+clear

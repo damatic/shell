@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
 	strcpy(mode_buffer, argv[1]);
 	strcpy(buf, argv[2]);
 	
-    if((mode_octal = strtol(mode_buffer, 0, 8)) == 0){
+    if((mode_octal = strtol(mode_buffer, 0, 8)) == 0){ // prebacivanje u octalni
 		print_error(argv[0], argv[2]);
 	}
 	

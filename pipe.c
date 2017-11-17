@@ -28,7 +28,7 @@ void execArgsPiped(char* parsed[], char* parsedpipe[])
         return;
     }
 
-    if (pid1 == 0) { // child 2
+    if (pid1 == 0) { // child 1
         //printf("First child is writing to pipe...\n");	
 		close(pipefd[0]);
         dup2(pipefd[1], STDOUT_FILENO);

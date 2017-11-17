@@ -28,7 +28,7 @@ void echo(char* argv[]) // echo sa ispisom systemskih varijabli
 		else
 			printf("Cannot find system variable\n");
 	}else{
-		while(argv[i] != NULL){
+		while(argv[i] != NULL){ // ispis svih ostalih argumenata, odnosno recenice
 			printf("%s ", argv[i]);
 			i++;
 		}
@@ -36,7 +36,7 @@ void echo(char* argv[]) // echo sa ispisom systemskih varijabli
 	}
 }
 
-int cdir(const char* path)
+int cdir(const char* path) // mijenjanje trenutne putanje ljuske
 {
 	if(chdir(path) == -1){
 		fprintf(stderr, "cdir: ERROR: %s\n", strerror(errno));
@@ -46,11 +46,11 @@ int cdir(const char* path)
 	return 0;
 }
 
-void pwd()
+void pwd() // ispis trenutne putanje na kojoj se korisnik nalazi
 {
   	char cwd[BUFFER_SIZE_FOR_NAMES];
 
-  	if (getcwd(cwd, BUFFER_SIZE_FOR_NAMES) != NULL)
+  	if (getcwd(cwd, BUFFER_SIZE_FOR_NAMES) != NULL) 
    	    fprintf(stdout, "%s\n", cwd);
    	else
 		fprintf(stderr, "getcwd: ERROR: %s\n", strerror(errno));
@@ -62,7 +62,7 @@ void clear_terminal()
 	printf("\033c");
 }
 
-void history_shell(const char* cmd) // dodati za brisanje citave povijesti...
+void history_shell(const char* cmd) // spremanje povijesti u datoteku
 {
 	FILE* fd;
 	
@@ -79,7 +79,7 @@ void history_shell(const char* cmd) // dodati za brisanje citave povijesti...
 	fclose(fd);
 }
 
-void print_history() // dodati za brisanje citave povijesti...
+void print_history() // ispis citave povijesti s brojem naredbe
 {
 	FILE* fd;
 	int count_commands = 0;
@@ -104,8 +104,7 @@ void print_history() // dodati za brisanje citave povijesti...
 	fclose(fd);
 }
 
-
-int check_builtin(char* line)
+int check_builtin(char* line) // provjera da li naredba sadrzi builtin program/funkciju
 {
 	char *argv[ARGUMENT_SIZE];
 	int argc = 0;
