@@ -11,6 +11,7 @@
 #include <errno.h>
 
 
+
 #define __USE_XOPEN // potrebno za strptime javlja gresku bez njega
 #define _GNU_SOURCE // -||-
 #include <time.h>

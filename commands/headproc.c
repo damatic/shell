@@ -8,7 +8,7 @@ void print_error(const char *this, const char *filename)
 {	// u slucaju da radnja ne uspije iz nekog razloga
 	// this ce biti ime komande
 	fprintf(stderr, "%s: cannot print 10 lines of '%s' to terminal\n"
-	"ERROR: %s\n", this, filename, strerror(errno));
+					"ERROR: %s\n", this, filename, strerror(errno));
 	
 	exit(EXIT_FAILURE);
 }
@@ -68,3 +68,4 @@ int main(int argc, char* argv[])
 
 	return 0;
 }
+

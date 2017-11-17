@@ -7,14 +7,16 @@
 #include <sys/wait.h> // potrebno za wait()
 
 
-// pipe radi, oba programa odrade posao, problem je kod pisanja, ne postoji EOF
 void execArgsPiped(char* parsed[], char* parsedpipe[])
 {
 	int first_child_status;
 	int second_child_status;
     int pipefd[2];
     pid_t pid1, pid2;
-	char program_path[PATH_MAX] = "/home/matic/shell/commands/"; // potrebno upisati trenutnu putanju!!!
+	char program_path[PATH_MAX];
+	
+	strcpy(program_path, getenv("HOME"));
+	strcat(program_path, "/shell/obj_output/");
 	
     if (pipe(pipefd) < 0) {
         perror("\nPipe could not be initialized!\n");

@@ -126,3 +126,21 @@ list | head
 list | head
 list commands | head
 clear
+head makefile
+clear
+clear
+pwd
+clear
+clear
+pwd
+list
+echo $HOME
+clear
+list
+pwd
+echo $PATH
+list
+pwd
+list | head
+list | head
+list | head builtin.c

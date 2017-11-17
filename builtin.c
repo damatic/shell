@@ -4,7 +4,7 @@
 #include <errno.h>
 #include <string.h>
 
-#define BUFFER_SIZE_FOR_NAMES 124
+#define BUFFER_SIZE_FOR_NAMES 50
 #define ARGUMENT_SIZE 50
 
 void exit_shell()
@@ -39,7 +39,7 @@ void echo(char* argv[]) // echo sa ispisom systemskih varijabli
 int cdir(const char* path)
 {
 	if(chdir(path) == -1){
-		fprintf(stderr, "ERROR: %s\n", strerror(errno));
+		fprintf(stderr, "cdir: ERROR: %s\n", strerror(errno));
 		return -1;
 	}
 	
@@ -48,12 +48,12 @@ int cdir(const char* path)
 
 void pwd()
 {
-  	char cwd[1024];
+  	char cwd[BUFFER_SIZE_FOR_NAMES];
 
-  	if (getcwd(cwd, sizeof(cwd)) != NULL)
+  	if (getcwd(cwd, BUFFER_SIZE_FOR_NAMES) != NULL)
    	    fprintf(stdout, "%s\n", cwd);
    	else
-		perror("getcwd() error");
+		fprintf(stderr, "getcwd: ERROR: %s\n", strerror(errno));
 
 }
 
@@ -66,7 +66,7 @@ void history_shell(const char* cmd) // dodati za brisanje citave povijesti...
 {
 	FILE* fd;
 	
-	if((fd = fopen("/home/matic/shell/history", "a")) == NULL){
+	if((fd = fopen("history", "a")) == NULL){
 		printf("Cannot open history file!\n");
 		return;
 	}

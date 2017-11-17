@@ -32,7 +32,7 @@ init* init_shell()
 	
 	data = (init*)malloc(sizeof(init));
 	strcpy(data->program_path, getenv("HOME"));
-	strcat(data->program_path, "/shell/commands/");  // postaviti svoju putanju!!!!
+	strcat(data->program_path, "/shell/obj_output/");
 	data->username = getenv("USER");
 	
 	if(gethostname(data->hostname, BUFFER_SIZE_FOR_NAMES) == -1){
