@@ -79,7 +79,6 @@ void history_shell(const char* cmd) // spremanje povijesti u datoteku
 	
 	if((fd = fopen("history", "a")) == NULL){
 		printf("Cannot open history file!\n");
-		fclose(fd);
 		return;
 	}
 	

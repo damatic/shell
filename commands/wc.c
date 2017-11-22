@@ -5,6 +5,9 @@
 #include <sys/stat.h>
 #include <unistd.h> // potrebno za rmdir
 
+#define BUFFER_SIZE_FOR_NAMES 50
+#define BUFFER_LENGTH 1024
+
 
 void print_error(const char *this, const char *filename)
 {	// u slucaju da radnja ne uspije iz nekog razloga
@@ -30,24 +33,25 @@ int main(int argc, char* argv[])
 	FILE *file;
 	struct stat stbuf1, stbuf2;
 	int count = 0;
-	char word[128];
+	char word[BUFFER_SIZE_FOR_NAMES];
 	int flag = 0;
 	
 	if(argv[1][0] != '-'){
 		print_usage(argv[0]);
 	}
 	
-	if(fstat(3, &stbuf2) == 0 && argv[1] == NULL){ // provjera ako je fd otvoren, stdin spojen na read kraj od pipe-a...
+	if(fstat(3, &stbuf2) == 0 && argv[2] == NULL){ // provjera ako je fd otvoren, stdin spojen na read kraj od pipe-a...
 		flag++;
-		if((file = fopen("pipe_temp", "w")) == NULL)
+		if((file = fopen("pipe_temp", "w")) == NULL){
 			print_error(argv[0], "pipe_temp");
-			
+		}
+		
 		while((c = getc(stdin)) != EOF ){
 			fprintf(file, "%c", c);
 		}
 		
 		fclose(file);
-		argv[2] = malloc(sizeof(char)*50);
+		argv[2] = malloc(sizeof(char)*BUFFER_LENGTH);
 		strcpy(argv[2], "pipe_temp");
 	}
 
@@ -55,7 +59,7 @@ int main(int argc, char* argv[])
 		print_error(argv[0], argv[2]);
 		return EXIT_FAILURE;
 	}
-	
+
 	if((file = fopen(argv[2], "r")) == NULL){
 			print_error(argv[0], argv[2]);
 			return EXIT_FAILURE;
@@ -68,7 +72,7 @@ int main(int argc, char* argv[])
 		}
 		printf("Broj znakova u datoteci je: %d\n", count);
 		
-		if(flag == 1){ // ciscenje programa u slucaju da je bio pipe
+		if(flag > 1){ // ciscenje programa u slucaju da je bio pipe
 			free(argv[2]);
 			fclose(file);
 			if(remove("pipe_temp") == -1){
@@ -77,14 +81,14 @@ int main(int argc, char* argv[])
 		}
 		return 0;
 	}
-	
+
 	if(strcmp(argv[1], "-w") == 0){
 		while(fscanf(file, "%s", word) == 1){
 			count++;
 		}
 		printf("Broj \"rijeci\" u datoteci je: %d\n", count);
 		
-		if(flag == 1){ // ciscenje programa u slucaju da je bio pipe
+		if(flag > 0){ // ciscenje programa u slucaju da je bio pipe
 			free(argv[2]);
 			fclose(file);
 			if(remove("pipe_temp") == -1){
@@ -101,7 +105,7 @@ int main(int argc, char* argv[])
 		}
 		printf("Broj linija u datoteci je: %d\n", count);
 		
-		if(flag == 1){ // ciscenje programa u slucaju da je bio pipe
+		if(flag > 0){ // ciscenje programa u slucaju da je bio pipe
 			free(argv[2]);
 			fclose(file);
 		if(remove("pipe_temp") == -1){
@@ -112,12 +116,12 @@ int main(int argc, char* argv[])
 	}
 	fclose(file);
 	
-	if(flag == 1){ // ciscenje programa u slucaju da je bio pipe
+	/*if(flag == 1){ // ciscenje programa u slucaju da je bio pipe
 		free(argv[2]);
 		if(remove("pipe_temp") == -1){
 			perror("ERROR: Cannot remove file 'pipe_temp'");
 		}
-	}
+	}*/
 	
-	return 1;
+	return 0;
 }
