@@ -23,6 +23,7 @@
 // ls -all imena, dozvole, veze, vlasnici sa . i ..
 // ls -a imena i . i .. bez dozvola itd
 
+
 // impelemtacija list naredbe bez primanja dodatnih argumenata
 
 void print_error(const char *this, const char *filename)

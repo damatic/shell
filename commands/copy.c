@@ -37,11 +37,13 @@ void copyFile(const char* src_file, char* dest_file) // kopiranje datoteka
 
 	if((fd_src = fopen(src_file, "rb")) == NULL){
 		print_error("copy", src_file, dest_file);
+		return;
 	}
 	
 	if((fd_dest = fopen(dest_file, "wb")) == NULL){
 		fclose(fd_src);
 		print_error("copy", src_file, dest_file);
+		return;
 	}
 	
 	do {

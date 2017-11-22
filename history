@@ -1,154 +1,33 @@
-list
-clear
 pwd
 pwd
 list
-print_history
-print_history
+pwd
+cdir /etc
+pwd
+list
+cdir commands/
+list
+pwd
+pwd
 clear
-list | head builtin.h
-list | head builtin
+list | list
+list /home/matic | list
+head -
 clear
-echo $USERNAME
+clear
+clear
+clear
+clear
+clear
+echo $PATH
 echo $USER
+echo HOME
+echo $HOME
 clear
-echo $HOSTNAME
-echo $HOST
-echo hostname
-clear
-list
-head 
-head .
-list | head
-clear
-print_history
-ph
-clear
-ph
-clear
-ph
-list
-clear
-head builtin.
-head builtin.c
 exit
+cdir
+cdir -
 pwd
-list /
-clear
+cdir
 pwd
-clear
-pwd
-list
-clear
-ph
-ph
-pwd
-list
-clear
-wc -w builtin.h
-wc -w builtin.c
-pwd
-list | head
-echo $PATH
-clear
-pwd
-pwd
-pwd
-pwd
-list
-head | list
-clear
-echo $USER
-clear
-echo $HOME
-clear
-pwd
-echo $HOME
-list | head
-clear
-pwd
-ph
-echo $HOME
-list w head
-list | head
-head makefile
-clear
-cat makefile 
-clear
-head makefile 
-clear
-headm makefile
-head makefile
-clear
-head makefile 
-clear
-ph
-clear
-pwd
-list
-pwd
-pwd
-echo $HOME
-list | head
-list | head
-clear
-clear
-pwd
-list | head
-clear
-pwd
-list | head
-list | head
-list
-pwd
-list | head
-clear
-list
-pwd
-echo $HOME
-echo $USER
-echo $SHELL
-clear
-list
-pwd
-head main.c 
-clear
-list | head
-clear
-list
-list
-pwd
-echo $HOME
-cd ..
-list
-pwd
-list | head
-list | head
-list commands | head
-clear
-head makefile
-clear
-clear
-pwd
-clear
-clear
-pwd
-list
-echo $HOME
-clear
-list
-pwd
-echo $PATH
-list
-pwd
-list | head
-list | head
-list | head builtin.c
-list
-clear
-list
-list | head
-pwd
-echo $HOME
-echo $USER
-clear
+cdir

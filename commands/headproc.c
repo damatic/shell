@@ -62,9 +62,10 @@ int main(int argc, char* argv[])
 			if(remove("head_temp") == -1){
 				perror("cannot remove file 'head_temp'");
 			}
-	}else{
-		fclose(file);
 	}
+	
+	fclose(file);
+	
 
 	return 0;
 }

@@ -37,9 +37,9 @@ int main(int argc, char* argv[])
 		print_usage(argv[0]);
 	}
 	
-	if(fstat(3, &stbuf2) == 0 && argv[1] == NULL){ // provjera ako je fd otvoren, stdin spojen na read kraj od pipe-a....
+	if(fstat(3, &stbuf2) == 0 && argv[1] == NULL){ // provjera ako je fd otvoren, stdin spojen na read kraj od pipe-a...
 		flag++;
-		if((file = fopen("pipe_temp", "w")) == NULL) // problem s EOF-om pa je zbog toga 'i' granica...
+		if((file = fopen("pipe_temp", "w")) == NULL)
 			print_error(argv[0], "pipe_temp");
 			
 		while((c = getc(stdin)) != EOF ){

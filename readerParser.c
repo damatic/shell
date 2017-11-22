@@ -61,7 +61,7 @@ char* readLineCommand(init* data)
 	
 	if (line && *(line)){ // sprema povijest naredbi, sve razlicito od prazne linije
 		add_history(line); // history iz readline biblioteke
-		history_shell(line); // vlastit history
+		history_shell(line); // vlastito spremanje povijesti naredbi
 	}
 	
 	return line;

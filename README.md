@@ -13,6 +13,7 @@ Ljuska trenutno ima 12 vlastitih programa koje može izvršiti a to su:
 - copy - kopiranje datoteka pojedinačno, ne i direktorija sa sadržajem
 - list - ispis sadržaja direktorija, ispisuje većinu informacija
 - mkd - stvaranje novog direktorija
+- mkf - stvaranje nove datoteke
 - move - premještanje direktorija i datoteka na drugu lokaciju
 - rm - brisanje datoteka ili praznih direktorija
 - wc - ispis znakova/riječi/linija neke datoteke

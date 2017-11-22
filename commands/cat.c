@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
 	while ((c = getc(file)) != EOF){
 		putchar(c);
 	}
-	putchar('\n');
+	//putchar('\n');
 	
 	fclose(file);
 
