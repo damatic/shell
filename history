@@ -2,95 +2,58 @@ pwd
 list
 pwd
 cdir /etc
-list | list
-list /home/matic | list
-head -
 clear
 exit
 echo $PATH
-echo $USER
-cdir
-cdir -
-ph
-list | wc -w
-wc -w builtin.h
+head builtin.h
 list | head
+list | wc -l
+wc -w builtin.h
+wc -w builtin.h
+list | wc -w
+exit
+wc -l builtin.c
+echo $USER
+echo USER
+clear
+ph
+echo $SHELL
+clear
+echo $SHELL
+clear
+pwd
+list
+list | wc -w
+list
+list | head
+echo $PS1
+clear
+echo $0
+echo \s
+echo $\s
+echo $(\s)
+echo "\s"
+pwd
+make all
+clear
 list | head
 list
 pwd
+head | wc -w
 wc -w builtin.h
-head builtin.h
-list | head
-list | wc -w
-list | wc -w
-list | wc -w
-list | wc -w
-list | wc -w
-list | wc -w
-list | wc -w builtin..h
-list | wc -w builtin.h
-wc -w builtin.h
+head | wc -w
+head | wc -c
 clear
-wc -w builtin.h
-head builtin.h
-head builtin.c
-clear
-list | head
-clear
-list | head
-clear
-list | head
-clear
-wc -w builtin.h
-list | wc -w builtin.h
-list | wc -w builtin.h
-list | head
-list | head builtin.h
-clear
-wc -w builtin.h
-list | wc -w
-wc -w builtin.h
-wc -w builtin.h
-wc -w builtin.h
-wc -w builtin.h
-head .
-head builtin.
-head builtin.h
-wc -c builtin.h
-wc -w builtin.h
-wc -w builtin.h
-wc -w builtin.h
-wc -w builtin.h
-wc -w builtin.h
-wc -w builtin.h
-wc -w builtin.h
-wc -w builtin.h
-wc -w builtin.h
-wc -w builtin.h
-wc -w builtin.h
-wc -w builtin.h
-list | wc -w
-clear
-list | wc -w
-list | wc -w
-list | wc -w
-list | wc -w
-list | wc -w
-list | wc -w
-list | wc -w
+cd ..
 list | wc -w
 list | wc -c
+list | wc -c builtin.h
+clear
+exit
+list | wc -c
+list | wc -w
 list | wc -l
 clear
-list
-pwd
-clear
-mkf touch
-list
-rm touch
-list
+wc -w builtin.c
 wc -w builtin.h
-head builtin.h
 list | head
-list | wc -w
-clear

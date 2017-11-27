@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
 {
 	int c;
 	FILE *file;
-	struct stat stbuf1, stbuf2;
+	struct stat stbuf1;
 	int count = 0;
 	char word[BUFFER_SIZE_FOR_NAMES];
 	int flag = 0;
@@ -40,7 +40,7 @@ int main(int argc, char* argv[])
 		print_usage(argv[0]);
 	}
 	
-	if(fstat(3, &stbuf2) == 0 && argv[2] == NULL){ // provjera ako je fd otvoren, stdin spojen na read kraj od pipe-a...
+	if(!isatty(fileno(stdin)) && argv[2] == NULL){ // provjera ako je fd otvoren, stdin spojen na read kraj od pipe-a...
 		flag++;
 		if((file = fopen("pipe_temp", "w")) == NULL){
 			print_error(argv[0], "pipe_temp");
@@ -71,15 +71,6 @@ int main(int argc, char* argv[])
 				count++;
 		}
 		printf("Broj znakova u datoteci je: %d\n", count);
-		
-		if(flag > 1){ // ciscenje programa u slucaju da je bio pipe
-			free(argv[2]);
-			fclose(file);
-			if(remove("pipe_temp") == -1){
-				perror("cannot remove file 'pipe_temp'");
-			}
-		}
-		return 0;
 	}
 
 	if(strcmp(argv[1], "-w") == 0){
@@ -87,15 +78,6 @@ int main(int argc, char* argv[])
 			count++;
 		}
 		printf("Broj \"rijeci\" u datoteci je: %d\n", count);
-		
-		if(flag > 0){ // ciscenje programa u slucaju da je bio pipe
-			free(argv[2]);
-			fclose(file);
-			if(remove("pipe_temp") == -1){
-				perror("Cannot remove file 'pipe_temp'");
-			}
-		}
-		return 0;
 	}
 	 
 	if(strcmp(argv[1], "-l") == 0){
@@ -104,24 +86,15 @@ int main(int argc, char* argv[])
 				count++;
 		}
 		printf("Broj linija u datoteci je: %d\n", count);
-		
-		if(flag > 0){ // ciscenje programa u slucaju da je bio pipe
-			free(argv[2]);
-			fclose(file);
-		if(remove("pipe_temp") == -1){
-				perror("cannot remove file 'pipe_temp'");
-			}
-		}	
-		return 0;
 	}
 	fclose(file);
 	
-	/*if(flag == 1){ // ciscenje programa u slucaju da je bio pipe
+	if(flag == 1){ // ciscenje programa u slucaju da je bio pipe
 		free(argv[2]);
 		if(remove("pipe_temp") == -1){
 			perror("ERROR: Cannot remove file 'pipe_temp'");
 		}
-	}*/
+	}
 	
 	return 0;
 }

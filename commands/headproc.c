@@ -3,6 +3,7 @@
 #include <errno.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <unistd.h>
 
 void print_error(const char *this, const char *filename)
 {	// u slucaju da radnja ne uspije iz nekog razloga
@@ -16,7 +17,7 @@ void print_error(const char *this, const char *filename)
 void print_usage(const char *this)
 {	// u slucaju da nije sintaksno tocno
 	fprintf(stderr, "SYNTAX ERROR: \n"
-	"USAGE %s [OPTION] [source]\n", this);
+					"USAGE %s [OPTION] [source]\n", this);
 	
 	exit(EXIT_FAILURE);
 }
@@ -25,12 +26,12 @@ int main(int argc, char* argv[])
 {
 	int c;
 	FILE *file;
-	struct stat stbuf1, stbuf2;
+	struct stat stbuf1;
 	const int limit = 10;
 	int count = 0;
 	int flag = 0;
 	
-	if(fstat(3, &stbuf2) == 0 && argv[1] == NULL){ // provjera ako je fd otvoren, stdin spojen na read kraj od pipe-a
+	if(!isatty(fileno(stdin)) && argv[1] == NULL){ // provjera ako je fd otvoren, stdin spojen na read kraj od pipe-a
 		flag++;
 		if((file = fopen("head_temp", "w")) == NULL)
 			print_error(argv[0], "head_temp");

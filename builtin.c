@@ -11,7 +11,7 @@
 void exit_shell()
 {
 	printf("shell exited\n");
-	_exit(0);
+	exit(0);
 }
 
 void echo(char* argv[]) // echo sa ispisom systemskih varijabli
@@ -30,8 +30,7 @@ void echo(char* argv[]) // echo sa ispisom systemskih varijabli
 			printf("Cannot find system variable\n");
 	}else{
 		while(argv[i] != NULL){ // ispis svih ostalih argumenata, odnosno recenice
-			printf("%s ", argv[i]);
-			i++;
+			printf("%s ", argv[i++]);
 		}
 		printf("\n");
 	}

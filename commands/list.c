@@ -43,6 +43,20 @@ void print_usage(const char *this)
 	exit(EXIT_FAILURE);
 }
 
+void print_permissions(struct stat stbuf)
+{	
+	//printf("%o\t", mystat.st_mode & S_IWGRP);
+    printf( (stbuf.st_mode & S_IRUSR) ? "r" : "-"); // vrati 400
+    printf( (stbuf.st_mode & S_IWUSR) ? "w" : "-"); // vrati 200 itd
+    printf( (stbuf.st_mode & S_IXUSR) ? "x" : "-"); // vrati 0 ako nema dozvole
+    printf( (stbuf.st_mode & S_IRGRP) ? "r" : "-");
+    printf( (stbuf.st_mode & S_IWGRP) ? "w" : "-");
+    printf( (stbuf.st_mode & S_IXGRP) ? "x" : "-");
+    printf( (stbuf.st_mode & S_IROTH) ? "r" : "-");
+    printf( (stbuf.st_mode & S_IWOTH) ? "w" : "-");
+    printf( (stbuf.st_mode & S_IXOTH) ? "x" : "-");
+}
+
 int main(int argc, char* argv[])
 {
 	DIR *mydir;
@@ -68,17 +82,8 @@ int main(int argc, char* argv[])
 			sprintf(buf, "%s/%s", argv[1], myfile->d_name);
 		    stat(buf, &stbuf);
 
-		    // dozvole nad datotekama
-		    //printf("%o\t", mystat.st_mode & S_IWGRP);
-		    printf( (stbuf.st_mode & S_IRUSR) ? "r" : "-"); // vrati 400
-		    printf( (stbuf.st_mode & S_IWUSR) ? "w" : "-"); // vrati 200 itd
-		    printf( (stbuf.st_mode & S_IXUSR) ? "x" : "-"); // vrati 0 ako nema dozvole
-		    printf( (stbuf.st_mode & S_IRGRP) ? "r" : "-");
-		    printf( (stbuf.st_mode & S_IWGRP) ? "w" : "-");
-		    printf( (stbuf.st_mode & S_IXGRP) ? "x" : "-");
-		    printf( (stbuf.st_mode & S_IROTH) ? "r" : "-");
-		    printf( (stbuf.st_mode & S_IWOTH) ? "w" : "-");
-		    printf( (stbuf.st_mode & S_IXOTH) ? "x" : "-");
+			// dozvole nad datotekama
+			print_permissions(stbuf);
 		    
 		    printf(" %ld", stbuf.st_nlink); // broj veza
 		    
