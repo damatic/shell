@@ -57,3 +57,21 @@ clear
 wc -w builtin.c
 wc -w builtin.h
 list | head
+list
+list
+pwd
+list
+pwd
+clear
+ph
+clear
+head builtin.c
+head builtin.h
+clear
+list | head
+list | wc -w
+list | wc -l
+list | wc -c
+list | head main.c 
+clear
+exit
