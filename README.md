@@ -4,10 +4,8 @@ Projekt za završni rad na fakultetu informacijske tehnologije, smjer programira
 
 Programira se u C programskom jeziku, compile se izvodi s gcc, a debug s gdb.
 
-Program je u cijelosti "kompajliran". Ako bi se program na novo "kompajlirao" te bio spreman za pokretanje, potrebno je pokrenuti make file na dva mjesta, početnom "folderu" i u commands "folderu" s naredbom 'make clean', te zatim s naredbom 'make all'. Izvorni kod se "kompajlira" s argumentom -Wall, koje omogućuje "hvatanje" svih upozorenja i greški nastalih pri "kompajliranju". Potrebno je također promijeniti varijablu 'program_path' u main.c i postaviti na trenutnu putanju programa.
 
-
-Ljuska trenutno ima 12 vlastitih programa koje može izvršiti a to su:
+Ljuska ima 13 vlastitih programa koje može izvršiti a to su:
 - cat - ispis datoteke na ekran
 - chmod - promjena prava pristupa datotekama i direktorijima
 - copy - kopiranje datoteka pojedinačno, ne i direktorija sa sadržajem
@@ -31,3 +29,15 @@ Builtin programi/funkcije ljuske:
 - history - spremanje naredbi u datoteku, mogući pregled povijesti s strelicom za gore i dolje
 - ph - ispis povijesti naredbi
 - smart completion - završavanje imena datoteka/direktorija pomoću tab-a
+
+
+Instaliranje Linux ljuske Slash
+
+Za instaliranje Linux ljuske Slash potrebno je pokrenuti prevođenje pomoću naredbe make all
+i to u direktoriju ./shell te u direktoriju ./shell/commands. Nakon izvršavanja naredbi,
+u direktoriju ./shell stvori se izvršna datoteka shell_start koja se pokreće naredbom
+./shell_start. Naredba ./shell_start pokreće Linux ljusku Slash. Prevođenje vanjskih
+naredbi se izvršava pokretanjem naredbe make all iz direktorija ./shell/commands.
+Prevedene izvršne datoteke smještene su u direktorij ./shell/obj_output.
+
+
