@@ -11,16 +11,17 @@ typedef struct init{
 	char hostname[BUFFER_SIZE_FOR_NAMES];
 	char buffer_prompt[BUFFER_LENGTH];
 	char* username;
+	char* line;
 	int child_status;
 }init;
 
-void start_shell(void);
+int start_shell(void);
 
-init* init_shell(void);
+int init_shell(init* data);
 
-char* readLineCommand(init* data);
+int readLineCommand(init* data);
 
-int parseCommand(init* data, char* line);
+int parseCommand(init* data);
 
 int executeCommand(init* data, char* argv[]);
 

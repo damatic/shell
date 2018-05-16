@@ -6,68 +6,76 @@
 #include <linux/limits.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+
 #include "readerParser.h"
 #include "pipe.h"
 #include "builtin.h"
-
 
 #include <readline/readline.h>
 #include <readline/history.h>
 
 #define BUFFER_SIZE_FOR_NAMES 50
 
-void start_shell()
+int start_shell()
 {
 	init* data = NULL;
 
 	while(1){
-		data = init_shell();
-		parseCommand(data, readLineCommand(data));
+		data = (init*)malloc(sizeof(init));
+		init_shell(data);
+		if(readLineCommand(data) != 2)
+			parseCommand(data);
+		cleaning(data);
 	}
 }
 
-init* init_shell()
-{
-	init* data;
+int init_shell(init* data)
+{	
+	//data = (init*)malloc(sizeof(init));
 	
-	data = (init*)malloc(sizeof(init));
+	if(data == NULL) // malloc nije uspio alocirati memoriju
+		return 2;
 	
 	strcpy(data->program_path, getenv("HOME"));
 	strcat(data->program_path, "/shell/obj_output/");
 	data->username = getenv("USER");
 	
 	if(gethostname(data->hostname, BUFFER_SIZE_FOR_NAMES) == -1){
-		printf("Cannot get hostname\n"
-			   "ERROR: %s", strerror(errno));
+		printf("Cannot get hostname\n ERROR: %s", strerror(errno));
 	}
 	
 	sprintf(data->buffer_prompt, "%s@%s >> ", data->username, data->hostname);
 	
-	return data;
+	//readLineCommand(data);
+	
+	return 0;
 }
 
-char* readLineCommand(init* data)
+int readLineCommand(init* data)
 {
 	//rl_bind_key('\t', rl_abort);//disable auto-complete
 	
-	char* line = NULL;
+	data->line = NULL;
 	
-	line = readline(data->buffer_prompt); // inicijalizacija readline skupa funkcija
+	data->line = readline(data->buffer_prompt); // inicijalizacija readline skupa funkcija
 	
-	if (!line){ // u slucaju da je ^D End-Of-File
+	if (!data->line){ // u slucaju da je ^D End-Of-File
 		printf("exited - EOF\n");
-		exit(0);
+		cleaning(data);
+		_exit(2);
+	}
+	printf("TEST ALOCATED\n");
+	if (data->line && *(data->line)){ // sprema povijest naredbi, sve razlicito od prazne linije
+		add_history(data->line); // history iz readline biblioteke
+		history_shell(data->line); // vlastito spremanje povijesti naredbi
 	}
 	
-	if (line && *(line)){ // sprema povijest naredbi, sve razlicito od prazne linije
-		add_history(line); // history iz readline biblioteke
-		history_shell(line); // vlastito spremanje povijesti naredbi
-	}
+	//parseCommand(data);
 	
-	return line;
+	return 0;
 }
 
-int parseCommand(init* data, char* line)
+int parseCommand(init* data)
 {
 	char* token;
 	unsigned count_pipe = 0;
@@ -78,20 +86,21 @@ int parseCommand(init* data, char* line)
 	unsigned argc1 = 0;
 	unsigned argc2 = 0;
 	
-	strcpy(temp_buffer, line);
+	strcpy(temp_buffer, data->line);
 	
 	if (strtok(temp_buffer, " \t\n\r") == NULL) { // prazna komanda
 		printf("empty command!!!\n");
+		//cleaning(data);
 		return 2; //break;
 	}
 	
-	strcpy(line_builtin, line); // posebno za builtin programe, da ne dira izvorni string u slucaju da nije nasao builtin program/funkciju
+	strcpy(line_builtin, data->line); // posebno za builtin programe, da ne dira izvorni string u slucaju da nije nasao builtin program/funkciju
 	if(check_builtin(line_builtin) == 1){
-		cleaning(data);
+		//cleaning(data);
 		return 2; //break;
 	}
 	
-	token = strtok(line, " \n\t()<>;");
+	token = strtok(data->line, " \n\t()<>;");
 	while(token != NULL && argc1 < 256 && argc2 < 256){
 		if(strcmp(token, "|") == 0){
 			count_pipe = 1;
@@ -114,7 +123,7 @@ int parseCommand(init* data, char* line)
 		
 		execArgsPiped(argv1, argv2);
 		
-		cleaning(data);
+		//cleaning(data);
 		return 2; //break;
 	}
 	
@@ -132,7 +141,7 @@ int executeCommand(init* data, char* argv[])
 	pid_t pid;
 	
 	if((pid = fork()) == -1){
-		cleaning(data);
+		//cleaning(data);
 		return 1; //break;
 	}
 	
@@ -144,7 +153,7 @@ int executeCommand(init* data, char* argv[])
 	}else{ // parrent
 		//wait(&child_status); // cekanje da dijete proces zavrsi sa dodatnim informacijama, pomocu MACRO-a provjera
 		wait(NULL);
-		cleaning(data);
+		//cleaning(data);
 	}
 	
 	return 0;
@@ -157,8 +166,12 @@ int parseInfo()
 
 void cleaning(init* data)
 {
+	//free(data->program_path);
+	//free(data->hostname);
+	//free(data->buffer_prompt);
+	//free(data->line);
 	free(data);
 	data = NULL;
 	
-	data = init_shell();
+	//data = init_shell();
 }
