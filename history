@@ -120,3 +120,34 @@ list | wc -c
 list
 clear
 exit
+list
+pwd
+list | wc -l
+pwd
+exit
+list
+exit
+list
+exit
+list
+exit
+list
+exit
+list
+list
+list
+list
+ls
+ls
+list
+list | wc -c
+list
+cat makefile
+exit
+list | wc -c
+asdasdas
+exi
+exit
+list | wc -c
+clear
+exit
