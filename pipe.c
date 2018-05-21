@@ -22,6 +22,7 @@ void execArgsPiped(char* parsed[], char* parsedpipe[])
         return;
     }
 	
+	
     if ((pid1 = fork()) == -1) {
         perror("\nfork() failed\n");
         return;
