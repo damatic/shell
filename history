@@ -151,3 +151,10 @@ exit
 list | wc -c
 clear
 exit
+pwd
+ls
+list
+list
+exit
+list
+exit

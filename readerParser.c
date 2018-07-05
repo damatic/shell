@@ -14,6 +14,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+
 #define BUFFER_SIZE_FOR_NAMES 50
 
 int start_shell()
@@ -33,7 +34,7 @@ int init_shell(init* data)
 {	
 	//data = (init*)malloc(sizeof(init));
 	
-	if(data == NULL) // malloc nije uspio alocirati memoriju
+	if(data == NULL) // malloc nije uspio alocirati memoriju, ispravka proslijedeno NULLfunkciji
 		return 2;
 	
 	strcpy(data->program_path, getenv("HOME"));
