@@ -10,8 +10,6 @@
 #include <linux/limits.h>
 #include <errno.h>
 
-
-
 #define __USE_XOPEN // potrebno za strptime javlja gresku bez njega
 #define _GNU_SOURCE // -||-
 #include <time.h>
@@ -20,7 +18,7 @@
 
 // ls samo imena
 // ls -l imena, dozvole, veze, vlasnici bez . i ..
-// ls -all imena, dozvole, veze, vlasnici sa . i ..
+// ls -al imena, dozvole, veze, vlasnici sa . i ..
 // ls -a imena i . i .. bez dozvola itd
 
 
@@ -57,16 +55,21 @@ void print_permissions(struct stat stbuf)
     printf( (stbuf.st_mode & S_IXOTH) ? "x" : "-");
 }
 
+void print_without_option(struct dirent* myfile)
+{
+	printf("%s  ", myfile->d_name);
+}
+
 int main(int argc, char* argv[])
 {
 	DIR *mydir;
     struct dirent *myfile;
     struct stat stbuf;
 	char buf[BUFFER_LENGTH];
-	char* last_modif_date;
-	struct tm tm;
-	struct passwd *pwd;
-	struct group *grp;
+	//char* last_modif_date;
+	//struct tm tm;
+	//struct passwd *pwd;
+	//struct group *grp;
 
 	
 	if(argv[1] == NULL){ // u slucaju da nema argumenta poslije ls
@@ -81,7 +84,7 @@ int main(int argc, char* argv[])
     	if(myfile->d_name[0] != '.'){
 			sprintf(buf, "%s/%s", argv[1], myfile->d_name);
 		    stat(buf, &stbuf);
-
+			/*
 			// dozvole nad datotekama
 			print_permissions(stbuf);
 		    
@@ -107,10 +110,12 @@ int main(int argc, char* argv[])
 			printf("\t%s", buffer);
 		    
 		    // ime datoteke
-		    printf(" %s\n", myfile->d_name);
+		    printf(" %s\n", myfile->d_name);*/
+			
+			print_without_option(myfile);
         }
     }
-    
+    printf("\n");
     closedir(mydir);
     
 	return 0;

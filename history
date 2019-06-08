@@ -75,3 +75,86 @@ list | wc -c
 list | head main.c 
 clear
 exit
+list
+clear
+clear
+exit
+list
+pwd
+list | wc -c
+pos
+exit
+pwd
+list
+list â‚| wc -c
+list  | wc -w
+pos
+exit
+pos
+exit
+pos
+list
+pwd
+exit
+exit
+list
+exit
+pwd
+exit
+list
+pwd
+list
+pwd
+pwd
+exit
+list
+list
+list
+pwd
+pwd
+pwd
+list
+list
+pwd
+list | wc -c
+list
+clear
+exit
+list
+pwd
+list | wc -l
+pwd
+exit
+list
+exit
+list
+exit
+list
+exit
+list
+exit
+list
+list
+list
+list
+ls
+ls
+list
+list | wc -c
+list
+cat makefile
+exit
+list | wc -c
+asdasdas
+exi
+exit
+list | wc -c
+clear
+exit
+pwd
+ls
+list
+list
+exit
+list
+exit

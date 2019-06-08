@@ -6,9 +6,8 @@
 #include <linux/limits.h> // potrebno za PATH_MAX
 #include <sys/wait.h> // potrebno za wait()
 
-
 void execArgsPiped(char* parsed[], char* parsedpipe[])
-{
+{// in the same time writing and reading from pipe....
 	int first_child_status;
 	int second_child_status;
     int pipefd[2];
@@ -22,6 +21,7 @@ void execArgsPiped(char* parsed[], char* parsedpipe[])
         perror("\nPipe could not be initialized!\n");
         return;
     }
+	
 	
     if ((pid1 = fork()) == -1) {
         perror("\nfork() failed\n");
@@ -39,7 +39,7 @@ void execArgsPiped(char* parsed[], char* parsedpipe[])
             exit(1);
         }
     } else { // parent
-		wait(&first_child_status); // cekanje da zavrsi prvo dijete
+		//wait(&first_child_status); // cekanje da zavrsi prvo dijete, bez ovoga
 		
 		if ((pid2 = fork()) == -1) { // drugi put fork(), iz istog roditelja
 			perror("\nfork() failed\n");
@@ -58,6 +58,7 @@ void execArgsPiped(char* parsed[], char* parsedpipe[])
 		} // parent
 		close(pipefd[0]); // potrebno zatvoriti jer i roditelj ima spojene file descriptore
 		close(pipefd[1]); // potrebno zatvoriti jer i roditelj ima spojene file descriptore
+		wait(&first_child_status);
 		wait(&second_child_status);
 	}
 }
