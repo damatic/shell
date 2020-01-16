@@ -75,3 +75,18 @@ list | wc -c
 list | head main.c 
 clear
 exit
+pwd
+ls
+ls .
+exit
+ls .
+pwd
+exit
+list
+list .
+ps
+cd obj_output/
+list
+list .
+./list
+./list .

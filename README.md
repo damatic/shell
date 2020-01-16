@@ -1,43 +1,41 @@
-# Ljuska u pokušaju...
+# Small shell for Linux
 
-Projekt za završni rad na fakultetu informacijske tehnologije, smjer programiranje.
+Program is implemented in C programming language, compile is done with GCC.
 
-Programira se u C programskom jeziku, compile se izvodi s gcc, a debug s gdb.
-
-
-Ljuska ima 13 vlastitih programa koje može izvršiti a to su:
-- cat - ispis datoteke na ekran
-- chmod - promjena prava pristupa datotekama i direktorijima
-- copy - kopiranje datoteka pojedinačno, ne i direktorija sa sadržajem
-- list - ispis sadržaja direktorija, ispisuje većinu informacija
-- mkd - stvaranje novog direktorija
-- mkf - stvaranje nove datoteke
-- move - premještanje direktorija i datoteka na drugu lokaciju
-- rm - brisanje datoteka ili praznih direktorija
-- wc - ispis znakova/riječi/linija neke datoteke
-- ps - ispis nekih informacija o trenutnim procesima, kao sto su PID, STATE, TTY i COMMAND
-- kill - ubijanje procesa sa signalom SIGTERM ne sa SIGMKILL
-- pipe - usmjeravanje izlaza jednog programa na ulaz drugoga
-- head - ispis prvih 10 linija iz datoteke, moguće i preko pipe-a
-
-Builtin programi/funkcije ljuske:
-- exit - izlazak iz ljuske
-- echo - ispis stringa ili sistemske varijable na ekran
-- clear - čišćenje čitavog ekrana
-- pwd - ispis trenutne putanje
-- cdir - promjena trenutne putanje
-- history - spremanje naredbi u datoteku, mogući pregled povijesti s strelicom za gore i dolje
-- ph - ispis povijesti naredbi
-- smart completion - završavanje imena datoteka/direktorija pomoću tab-a
+#### Shell has 13 own programs such as:
+- cat - printing file 
+- chmod - change permissions for files and directories
+- copy - copies empty directory
+- list - prints content of file, most of the info about file
+- mkd - create emtpy directory
+- mkf - create emtpy file
+- move - moves directories and files to another location
+- rm - deletes file or empty directory
+- wc - prints chars/words/lines from file
+- ps - prints information about current running processes, such as PID, STATE, TTY and COMMAND
+- kill - kills process with SIGTERM signal not SIGKILL, provides an elegance way to kill process/program
+- pipe(|) - passing data from one program stdout to a stdin of another program
+- head - it prints first 10 lines of file, can be done with pipe
 
 
-Instaliranje Linux ljuske Slash
+#### Builtin programs/functions of shell:
+- exit - exits shell
+- echo - prints string or system variable
+- pwd - it printsa path of current working directory
+- cdir - change path
+- history - saves every commands that was passed to shell, history can be seen with up and down arrows
+- ph - prints history of commands
+- smart completion - auto complete names of directories/files with tab
 
-Za instaliranje Linux ljuske Slash potrebno je pokrenuti prevođenje pomoću naredbe make all
-i to u direktoriju ./shell te u direktoriju ./shell/commands. Nakon izvršavanja naredbi,
-u direktoriju ./shell stvori se izvršna datoteka shell_start koja se pokreće naredbom
-./shell_start. Naredba ./shell_start pokreće Linux ljusku Slash. Prevođenje vanjskih
-naredbi se izvršava pokretanjem naredbe make all iz direktorija ./shell/commands.
-Prevedene izvršne datoteke smještene su u direktorij ./shell/obj_output.
+
+### Installation
+
+```
+~/shell $ make all
+~/shell/commands $ make all
+~/shell $ ./shell_start
+```
+
+For installing Linux shall, it is necessary to start command "make all" from shell directory and also from shell/commands directory. When compiling is done, output file shell_start is created. Command ./shell_start starts the Linux shall. Directory of object files of programs that are used in shell is shell/obj_output
 
 
