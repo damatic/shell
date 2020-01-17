@@ -1,0 +1,6 @@
+.vscode
+
+obj_output/
+shell_start
+history
+commands/history
