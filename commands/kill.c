@@ -8,8 +8,8 @@
 
 
 void print_error(const char *this, const char *filename)
-{	// u slucaju da radnja ne uspije iz nekog razloga
-	// this ce biti ime komande
+{	// in case if command fails for some reason
+	// this will be name of the command
 	fprintf(stderr, "%s: cannot terminate process with PID: %s\n"
 					"ERROR: %s\n", this, filename, strerror(errno));
 	
@@ -17,7 +17,7 @@ void print_error(const char *this, const char *filename)
 }
 
 void print_usage(const char *this)
-{	// u slucaju da nije sintaksno tocno
+{	// if syntax of command is not correct
 	fprintf(stderr, "SYNTAX ERROR: \n"
 					"USAGE %s [PID]\n", this);
 	
@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
 	
 	pid = atoi(argv[1]);
 	
-	if(kill(pid, SIGTERM) != 0){			// bolje SIGTERM, sa SIGKILL proces nema mogucnost da odradi ciscenje
+	if(kill(pid, SIGTERM) != 0){			// better SIGTERM, with SIGKILL process killed without clean
 		print_error(argv[0], argv[1]);
 	}
 	

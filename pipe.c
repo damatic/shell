@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-#include <sys/types.h> // potrebno za fork()
-#include <linux/limits.h> // potrebno za PATH_MAX
-#include <sys/wait.h> // potrebno za wait()
+#include <sys/types.h> 		// needed for fork()
+#include <linux/limits.h> 	// needed for PATH_MAX
+#include <sys/wait.h> 		// needed for wait()
 
 
 void execArgsPiped(char* parsed[], char* parsedpipe[])
@@ -28,7 +28,7 @@ void execArgsPiped(char* parsed[], char* parsedpipe[])
         return;
     }
 
-    if (pid1 == 0) { // child 1	
+    if (pid1 == 0) { // child process 1	
 		close(pipefd[0]);
         dup2(pipefd[1], STDOUT_FILENO);
         close(pipefd[1]);
@@ -38,14 +38,14 @@ void execArgsPiped(char* parsed[], char* parsedpipe[])
             perror("\nCould not execute command 1..\n");
             exit(1);
         }
-    } else { // parent
-		wait(&first_child_status); // cekanje da zavrsi prvo dijete
+    } else { // parent process
+		wait(&first_child_status); // waiting for first child process to end
 		
-		if ((pid2 = fork()) == -1) { // drugi put fork(), iz istog roditelja
+		if ((pid2 = fork()) == -1) { //second time fork(), from the same parent process
 			perror("\nfork() failed\n");
 			return;
 		}
-		if(pid2 == 0){ // child 2
+		if(pid2 == 0){ // child process 2
 			close(pipefd[1]);
 			dup2(pipefd[0], STDIN_FILENO);
 			close(pipefd[1]);
@@ -55,9 +55,9 @@ void execArgsPiped(char* parsed[], char* parsedpipe[])
 				perror("\nCould not execute command 2..\n");
 				exit(1);
 			}
-		} // parent
-		close(pipefd[0]); // potrebno zatvoriti jer i roditelj ima spojene file descriptore
-		close(pipefd[1]); // potrebno zatvoriti jer i roditelj ima spojene file descriptore
+		} // parent process
+		close(pipefd[0]); // close because parent proces shave connected file descriptors
+		close(pipefd[1]); // close because parent process have connected file descriptors
 		wait(&second_child_status);
 	}
 }

@@ -13,8 +13,8 @@
 
 
 void print_error(const char *this)
-{	// u slucaju da radnja ne uspije iz nekog razloga
-	// this ce biti ime komande
+{	// in case if command fails for some reason
+	// this will be name of the command
 	fprintf(stderr, "%s: cannot list informations about processes\n"
 					"ERROR: %s\n", this, strerror(errno));
 	
@@ -22,7 +22,7 @@ void print_error(const char *this)
 }
 
 void print_usage(const char *this)
-{	// u slucaju da nije sintaksno tocno
+{	// if syntax of command is not correct
 	fprintf(stderr, "SYNTAX ERROR: \n"
 					"USAGE %s\n", this);
 	
@@ -48,19 +48,20 @@ int main(int argc, char* argv[])
         print_error(argv[0]);
     }
 	
-	printf("%5s %6s %s %7s\n", "PID", "TTY", "STATE", "COMMAND"); // formatiranje headera
+	printf("%5s %6s %s %7s\n", "PID", "TTY", "STATE", "COMMAND"); // header
 	
-    while((myfile = readdir(mydir)) != NULL){ 	// otvaranje direktorija /proc
-        if (isdigit(myfile->d_name[0])){ 		// provjera je li prvi znak broj
+    while((myfile = readdir(mydir)) != NULL){ 	// opens directory /proc
+        if (isdigit(myfile->d_name[0])){ 		// check if the first char is number
 			strcat(buff, myfile->d_name);		
-			strcat(buff, "/stat");				// rezultat spajanja putanje /proc/PID/comm gdje se nalazi naziv naredbe
-			fp = fopen(buff, "r");
+			strcat(buff, "/stat");				// result of concatinating of path /proc/PID/comm (where the
+			fp = fopen(buff, "r");				// name of the command is located)
+
 			fscanf(fp, "%d %s %c %s %s %s %d", &pid, cmd, &state, ignore, ignore, ignore, &tty_nr);
 			token_cmd = strtok(cmd, "()");
 			
 			printf("%5d", pid);
 			
-			if(MAJOR(tty_nr) == 0){				// izdvajanje bitova za osnovni uređaj pts, tty...
+			if(MAJOR(tty_nr) == 0){				// returns bits for basic device -> pts, tty...
 				printf(" %6s", "?");
 			}else{
 				sprintf(str_tty, "%d:%d", MAJOR(tty_nr), MINOR(tty_nr));
@@ -72,7 +73,7 @@ int main(int argc, char* argv[])
 			
 			fclose(fp);
         }
-		strcpy(buff, "/proc/");					// postavljanje na pocetno buff
+		strcpy(buff, "/proc/");					// setting the buff variable to default value
     }
 	closedir(mydir);
 	

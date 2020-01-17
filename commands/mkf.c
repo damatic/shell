@@ -7,8 +7,8 @@
 #include <errno.h>
 
 void print_error(const char *this, const char *filename)
-{	// u slucaju da radnja ne uspije iz nekog razloga
-	// this ce biti ime komande
+{	// in case if command fails for some reason
+	// this will be name of the command
 	fprintf(stderr, "%s: failed to create '%s' file\n"
 					"ERROR: %s\n", this, filename, strerror(errno));
 	
@@ -16,7 +16,7 @@ void print_error(const char *this, const char *filename)
 }
 
 void print_usage(const char *this)
-{	// u slucaju da nije sintaksno tocno
+{	// if syntax of command is not correct
 	fprintf(stderr, "SYNTAX ERROR: "
 					"USAGE %s [filename]\n", this);
 	
@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
 		print_usage(argv[0]);
 	}
 	
-	if(stat(argv[1], &stbuf) == 0){ // ako datoteka postoji
+	if(stat(argv[1], &stbuf) == 0){ // if directory exists
 		print_error(argv[0], argv[1]);
 	}
 	

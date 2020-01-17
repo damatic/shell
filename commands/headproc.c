@@ -6,8 +6,8 @@
 #include <unistd.h>
 
 void print_error(const char *this, const char *filename)
-{	// u slucaju da radnja ne uspije iz nekog razloga
-	// this ce biti ime komande
+{	// in case if command fails for some reason
+	// this will be name of the command
 	fprintf(stderr, "%s: cannot print 10 lines of '%s' to terminal\n"
 					"ERROR: %s\n", this, filename, strerror(errno));
 	
@@ -15,7 +15,7 @@ void print_error(const char *this, const char *filename)
 }
 
 void print_usage(const char *this)
-{	// u slucaju da nije sintaksno tocno
+{	// if syntax of command is not correct
 	fprintf(stderr, "SYNTAX ERROR: \n"
 					"USAGE %s [OPTION] [source]\n", this);
 	
@@ -31,7 +31,8 @@ int main(int argc, char* argv[])
 	int count = 0;
 	int flag = 0;
 	
-	if(!isatty(fileno(stdin)) && argv[1] == NULL){ // provjera ako je fd otvoren, stdin spojen na read kraj od pipe-a
+	// Check if fd is open, stdin connected on read end of the pipe
+	if(!isatty(fileno(stdin)) && argv[1] == NULL){ 
 		flag++;
 		if((file = fopen("head_temp", "w")) == NULL)
 			print_error(argv[0], "head_temp");
@@ -45,7 +46,7 @@ int main(int argc, char* argv[])
 		strcpy(argv[1], "head_temp");
 	}
 	
-	if(stat(argv[1], &stbuf1) == -1){ // ako source file/dir ne postoji
+	if(stat(argv[1], &stbuf1) == -1){ // if source file/dir does not exist
 		print_error(argv[0], argv[1]);
 	}
 	
@@ -58,7 +59,7 @@ int main(int argc, char* argv[])
 			putchar(c);
 		}
 	}
-	if(flag == 1){ // ciscenje programa u slucaju da je bio pipe
+	if(flag == 1){ // cleaning program in case there was pipe
 			fclose(file);
 			if(remove("head_temp") == -1){
 				perror("cannot remove file 'head_temp'");

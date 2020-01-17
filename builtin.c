@@ -14,7 +14,7 @@ void exit_shell()
 	exit(0);
 }
 
-void echo(char* argv[]) // echo sa ispisom systemskih varijabli
+void echo(char* argv[]) // echo that prints system variables
 {
 	char* token;
 	char* buff;
@@ -29,14 +29,14 @@ void echo(char* argv[]) // echo sa ispisom systemskih varijabli
 		else
 			printf("Cannot find system variable\n");
 	}else{
-		while(argv[i] != NULL){ // ispis svih ostalih argumenata, odnosno recenice
+		while(argv[i] != NULL){ // prints string/sentence
 			printf("%s ", argv[i++]);
 		}
 		printf("\n");
 	}
 }
 
-int cdir(char* cmd[]) // mijenjanje trenutne putanje ljuske
+int cdir(char* cmd[]) // change of current path of the shell
 {
 	char home_path[BUFFER_LENGTH];
 	
@@ -56,7 +56,7 @@ int cdir(char* cmd[]) // mijenjanje trenutne putanje ljuske
 	return 0;
 }
 
-void pwd() // ispis trenutne putanje na kojoj se korisnik nalazi
+void pwd() // prints current working directory
 {
   	char cwd[BUFFER_SIZE_FOR_NAMES];
 
@@ -72,7 +72,7 @@ void clear_terminal()
 	printf("\033c");
 }
 
-void history_shell(const char* cmd) // spremanje povijesti u datoteku
+void history_shell(const char* cmd) // save commads to file history
 {
 	FILE* fd;
 	
@@ -90,7 +90,7 @@ void history_shell(const char* cmd) // spremanje povijesti u datoteku
 	fclose(fd);
 }
 
-void print_history() // ispis citave povijesti s brojem naredbe
+void print_history() // prints content from history file
 {
 	FILE* fd;
 	int count_commands = 0;
@@ -115,7 +115,7 @@ void print_history() // ispis citave povijesti s brojem naredbe
 	fclose(fd);
 }
 
-int check_builtin(char* line) // provjera da li naredba sadrzi builtin program/funkciju
+int check_builtin(char* line) // check if command is builtin
 {
 	char *argv[ARGUMENT_SIZE];
 	int argc = 0;
@@ -124,7 +124,7 @@ int check_builtin(char* line) // provjera da li naredba sadrzi builtin program/f
 	token = strtok(line, " \n\t()<>|&;");
 	while(token != NULL && argc < 256){
 		argv[argc] = token;
-		token = strtok(NULL, " \n\t()<>|&;"); // " \n\t()<>|&;" znakovi koje "ignorira"
+		token = strtok(NULL, " \n\t()<>|&;"); // " \n\t()<>|&;" chars that "ignores"
 		argc++;
 	}
 	

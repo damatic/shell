@@ -5,8 +5,8 @@
 #include <sys/stat.h>
 
 void print_error(const char *this, const char *filename)
-{	// u slucaju da radnja ne uspije iz nekog razloga
-	// this ce biti ime komande
+{	// in case if command fails for some reason
+	// this will be name of the command
 	fprintf(stderr, "%s: cannot print '%s' to terminal\n"
 					"ERROR: %s\n", this, filename, strerror(errno));
 	
@@ -14,7 +14,7 @@ void print_error(const char *this, const char *filename)
 }
 
 void print_usage(const char *this)
-{	// u slucaju da nije sintaksno tocno
+{	// if syntax of command is not correct
 	fprintf(stderr, "SYNTAX ERROR: \n"
 					"USAGE %s [source]\n", this);
 	
@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
 	FILE *file;
 	struct stat stbuf;
 	
-	if(stat(argv[1], &stbuf) == -1){ // ako source file/dir ne postoji
+	if(stat(argv[1], &stbuf) == -1){ // if source file/dir does not exist
 		print_error(argv[0], argv[1]);
 		return EXIT_FAILURE;
 	}

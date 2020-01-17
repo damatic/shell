@@ -1,7 +1,7 @@
 /*
 #################################################################
 #																#
-#		Description: Linux ljuska u c programskom jeziku		#
+#		Description: Linux shell in C programming language		#
 #		Author: Danijel Matic									#
 #		Unversity: Sveucilisni odjel za strucne studije			#
 #																#

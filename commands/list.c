@@ -18,17 +18,17 @@
 
 #define BUFFER_LENGTH 1024
 
-// ls samo imena
-// ls -l imena, dozvole, veze, vlasnici bez . i ..
-// ls -all imena, dozvole, veze, vlasnici sa . i ..
-// ls -a imena i . i .. bez dozvola itd
+// TO DO:
+// ls only names
+// ls -l names, permissions, relations, owners wtih . and ..
+// ls -all names, permissions, relations, owners with . and ..
+// ls -a names with . and .. without permissions etc
 
-
-// impelemtacija list naredbe bez primanja dodatnih argumenata
+// implementation of list command without additional argumets
 
 void print_error(const char *this, const char *filename)
-{	// u slucaju da radnja ne uspije iz nekog razloga
-	// this ce biti ime komande
+{	// in case if command fails for some reason
+	// this will be name of the command
 	fprintf(stderr, "%s: cannot list directory '%s'\n"
 					"ERROR: %s\n", this, filename, strerror(errno));
 	
@@ -36,7 +36,7 @@ void print_error(const char *this, const char *filename)
 }
 
 void print_usage(const char *this)
-{	// u slucaju da nije sintaksno tocno
+{	// if syntax of command is not correct
 	fprintf(stderr, "SYNTAX ERROR: "
 					"USAGE %s [path]\n", this);
 	
@@ -46,9 +46,9 @@ void print_usage(const char *this)
 void print_permissions(struct stat stbuf)
 {	
 	//printf("%o\t", mystat.st_mode & S_IWGRP);
-    printf( (stbuf.st_mode & S_IRUSR) ? "r" : "-"); // vrati 400
-    printf( (stbuf.st_mode & S_IWUSR) ? "w" : "-"); // vrati 200 itd
-    printf( (stbuf.st_mode & S_IXUSR) ? "x" : "-"); // vrati 0 ako nema dozvole
+    printf( (stbuf.st_mode & S_IRUSR) ? "r" : "-"); // returns 400
+    printf( (stbuf.st_mode & S_IWUSR) ? "w" : "-"); // returns 200 etc
+    printf( (stbuf.st_mode & S_IXUSR) ? "x" : "-"); // returns 0 if there is no permission
     printf( (stbuf.st_mode & S_IRGRP) ? "r" : "-");
     printf( (stbuf.st_mode & S_IWGRP) ? "w" : "-");
     printf( (stbuf.st_mode & S_IXGRP) ? "x" : "-");
@@ -69,7 +69,7 @@ int main(int argc, char* argv[])
 	struct group *grp;
 
 	
-	if(argv[1] == NULL){ // u slucaju da nema argumenta poslije ls
+	if(argv[1] == NULL){ // in case there is no argument after ls command
 		argv[1] = ".";
 	}
 	
@@ -82,10 +82,10 @@ int main(int argc, char* argv[])
 			sprintf(buf, "%s/%s", argv[1], myfile->d_name);
 		    stat(buf, &stbuf);
 
-			// dozvole nad datotekama
+			// permissions over directories
 			print_permissions(stbuf);
 		    
-		    printf(" %ld", stbuf.st_nlink); // broj veza
+		    printf(" %ld", stbuf.st_nlink); // number of relations
 		    
 			pwd = getpwuid(stbuf.st_uid);
 		    printf(" %s", pwd->pw_name); // ID of the owner of the file
@@ -93,20 +93,20 @@ int main(int argc, char* argv[])
 			grp = getgrgid(stbuf.st_gid);
 		    printf(" %s", grp->gr_name); // ID of the group owner of the file
 		    
-		    // velicina datoteke
+		    // size of a directory
 		    printf(" %ld",stbuf.st_size);
 		    
-		    // vrijeme zadnje promjene
+		    // time of the last change
 			char buffer[BUFFER_LENGTH];
 			
 			last_modif_date = ctime(&stbuf.st_mtime);
 			
 			strptime(last_modif_date, "%a %b %d %H:%M:%S %Y", &tm);
 			strftime(buffer, BUFFER_LENGTH, "%b %d %H:%M", &tm);
-		    //printf("mjesec %d ", tm.tm_mon + 1);
+		    //printf("montj %d ", tm.tm_mon + 1);
 			printf("\t%s", buffer);
 		    
-		    // ime datoteke
+		    // directory nema
 		    printf(" %s\n", myfile->d_name);
         }
     }

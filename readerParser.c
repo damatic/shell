@@ -48,20 +48,20 @@ init* init_shell()
 
 char* readLineCommand(init* data)
 {
-	//rl_bind_key('\t', rl_abort);//disable auto-complete
+	//rl_bind_key('\t', rl_abort); //disable auto-complete
 	
 	char* line = NULL;
 	
-	line = readline(data->buffer_prompt); // inicijalizacija readline skupa funkcija
+	line = readline(data->buffer_prompt); // initialisation of readline library
 	
-	if (!line){ // u slucaju da je ^D End-Of-File
+	if (!line){ // incase there is ^D End-Of-File
 		printf("exited - EOF\n");
 		exit(0);
 	}
 	
-	if (line && *(line)){ // sprema povijest naredbi, sve razlicito od prazne linije
-		add_history(line); // history iz readline biblioteke
-		history_shell(line); // vlastito spremanje povijesti naredbi
+	if (line && *(line)){ // save commands except it is empty line
+		add_history(line); // history from readline linrary
+		history_shell(line); // internal (readline library) saving of commands
 	}
 	
 	return line;
@@ -80,13 +80,12 @@ int parseCommand(init* data, char* line)
 	
 	strcpy(temp_buffer, line);
 	
-	if (strtok(temp_buffer, " \t\n\r") == NULL) { // prazna komanda
-		printf("empty command!!!\n");
+	if (strtok(temp_buffer, " \t\n\r") == NULL) { // empty command
 		return 2; //break;
 	}
 	
-	strcpy(line_builtin, line); // posebno za builtin programe, da ne dira izvorni string u slucaju da nije nasao builtin program/funkciju
-	if(check_builtin(line_builtin) == 1){
+	strcpy(line_builtin, line); 			// particular for builin programs, not to
+	if(check_builtin(line_builtin) == 1){   // modify string in case it didnt found builtin program
 		cleaning(data);
 		return 2; //break;
 	}
@@ -105,7 +104,7 @@ int parseCommand(init* data, char* line)
 				argc2++;
 			}
 		}
-		token = strtok(NULL, " \n\t()<>;"); // " \n\t()<>&;" znakovi koje "ignorira"
+		token = strtok(NULL, " \n\t()<>;"); // " \n\t()<>&;" chars that "ignores"
 	}
 	
 	if(count_pipe > 0){
@@ -118,8 +117,8 @@ int parseCommand(init* data, char* line)
 		return 2; //break;
 	}
 	
-	argv1[argc1] = NULL; // potrebno zbog execvp, da se zna gdje je kraj niza argumenata
-	strcat(data->program_path, argv1[0]); // spajanje putanje gdje se nalaze programi i samog imena programa
+	argv1[argc1] = NULL; // needed for execvp, so there is info about end of arguments
+	strcat(data->program_path, argv1[0]); // concatinate path where programs are located and name of the program
 	
 	if(executeCommand(data, argv1) == 2)
 		return 2;
@@ -136,13 +135,13 @@ int executeCommand(init* data, char* argv[])
 		return 1; //break;
 	}
 	
-	if(pid == 0){ // child
+	if(pid == 0){ // child process
 		if(execvp(data->program_path, argv) == -1){
 			printf("ERRNO: %s\n", strerror(errno));
 			exit(1);
 		}
-	}else{ // parrent
-		//wait(&child_status); // cekanje da dijete proces zavrsi sa dodatnim informacijama, pomocu MACRO-a provjera
+	}else{ // parrent process
+		//wait(&child_status); // waiting for first child process to ends with additional informations, with MACRO
 		wait(NULL);
 		cleaning(data);
 	}
