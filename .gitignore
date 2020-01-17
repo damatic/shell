@@ -1,5 +1,5 @@
 .vscode
 
 **/obj_output/
-**/shell_start/
+**/shell_start
 **/history
