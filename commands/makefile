@@ -1,43 +1,37 @@
-OBJDIR = $(HOME)/shell/obj_output
+#Make that compiles and creates commands
 
-all: copy list mkd move cat chmod wc rm ps kill head mkf
-	-mkdir -p $(OBJDIR)
-	
-copy: copy.c
-	gcc -Wall copy.c -o $(OBJDIR)/copy
+OBJDIR = ../obj_output
 
-list: list.c
-	gcc -Wall list.c -o $(OBJDIR)/list
+CC=gcc
 
-mkd: mkd.c
-	gcc -Wall mkd.c -o $(OBJDIR)/mkd
+RM=rm
 
-move: move.c
-	gcc -Wall move.c -o $(OBJDIR)/move
-	
-cat: cat.c
-	gcc -Wall cat.c -o $(OBJDIR)/cat
+CFLAGS= -Wall -O3
 
-chmod: chmod.c
-	gcc -Wall chmod.c -o $(OBJDIR)/chmod
+LDFLAGS=-lm
 
-wc: wc.c
-	gcc -Wall wc.c -o $(OBJDIR)/wc
-	
-rm: rm.c
-	gcc -Wall rm.c -o $(OBJDIR)/rm
+SOURCES=$(wildcard *.c)
 
-ps: printproc.c
-	gcc -Wall printproc.c -o $(OBJDIR)/ps
+$(info $$SOURCES is [${SOURCES}])
 
-kill: kill.c
-	gcc -Wall kill.c -o $(OBJDIR)/kill
-	
-head: headproc.c
-	gcc -Wall headproc.c -o $(OBJDIR)/head
+#OBJECTS=$(SOURCES:.c=.o)
 
-mkf: mkf.c
-	gcc -Wall mkf.c -o $(OBJDIR)/mkf
+#$(info $$OBJECTS is [${OBJECTS}])
 
+EXECS=$(SOURCES:%.c=%)
+
+$(info $$EXECS is [${EXECS}])
+
+.PHONY: all
+all: $(EXECS)
+
+#.c.o:
+#	$(CC) $(CFLAGS) $< -o ${OBJDIR}/$@
+
+$(EXECS): %: %.c
+	$(CC) $^ $(LDFLAGS) -o ${OBJDIR}/$@
+
+.PHONY: clean
 clean:
-	rm -r $(OBJDIR)/*
+	-@ $(RM) *.o 
+	-@ $(RM) $(EXECS)
