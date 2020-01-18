@@ -15,8 +15,8 @@ void execArgsPiped(char* parsed[], char* parsedpipe[])
     pid_t pid1, pid2;
 	char program_path[PATH_MAX];
 	
-	strcpy(program_path, getenv("HOME"));
-	strcat(program_path, "/shell/obj_output/");
+	//strcpy(program_path, getenv("HOME"));
+	strcat(program_path, "/mnt/c/Users/stingy/Desktop/shell/bin/");
 	
     if (pipe(pipefd) < 0) {
         perror("\nPipe could not be initialized!\n");

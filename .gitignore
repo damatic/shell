@@ -1,6 +1,6 @@
 .vscode
 
-**/obj_output/
+**/bin/
 **/shell_start
 **/history
 

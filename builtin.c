@@ -96,8 +96,8 @@ void print_history() // prints content from history file
 	int count_commands = 0;
 	int c;
 	
-	if((fd = fopen("/home/matic/shell/history", "r")) == NULL){
-		printf("Cannot open history file fore reading!\n");
+	if((fd = fopen("/mnt/c/Users/stingy/Desktop/shell/history", "r")) == NULL){
+		printf("Cannot open history file for reading!\n");
 		return;
 	}
 	

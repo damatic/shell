@@ -1,6 +1,16 @@
-#Make that compiles and creates commands
+###############################################################################
+#
+#	File: Makefile
+#
+#	Description: Makefile for commands
+#				 
+#	Author: Danijel Matic
+#
+#
+###############################################################################
 
-OBJDIR = ../obj_output
+MKDIR=mkdir
+OBJDIR = ../bin
 CC=gcc
 RM=rm
 CFLAGS= -Wall -O3
@@ -14,16 +24,16 @@ SOURCES=$(wildcard *.c)
 
 EXECS=$(SOURCES:%.c=%)
 
-.PHONY: all
+.PHONY: all clean
 all: $(EXECS)
 
 #.c.o:
 #	$(CC) $(CFLAGS) $< -o ${OBJDIR}/$@
 
 $(EXECS): %: %.c
+	$(MKDIR) -p ../bin
 	$(CC) $^ $(LDFLAGS) -o ${OBJDIR}/$@
 
-.PHONY: clean
 clean:
 #	-@ $(RM) *.o 
 	-@ $(RM) ${OBJDIR}/$(EXECS)

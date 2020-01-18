@@ -32,8 +32,8 @@ init* init_shell()
 	
 	data = (init*)malloc(sizeof(init));
 	
-	strcpy(data->program_path, getenv("HOME"));
-	strcat(data->program_path, "/shell/obj_output/");
+	//strcpy(data->program_path, getenv("HOME"));
+	strcat(data->program_path, "/mnt/c/Users/stingy/Desktop/shell/bin/");
 	data->username = getenv("USER");
 	
 	if(gethostname(data->hostname, BUFFER_SIZE_FOR_NAMES) == -1){

@@ -36,6 +36,6 @@ Program is implemented in C programming language, compile is done with GCC.
 ~/shell $ ./shell_start
 ```
 
-For installing Linux shall, it is necessary to start command "make all" from shell directory and also from shell/commands directory. When compiling is done, output file shell_start is created. Command ./shell_start starts the Linux shall. Directory of object files of programs that are used in shell is shell/obj_output
+For installing Linux shall, it is necessary to start command "make all" from shell directory and also from shell/commands directory. When compiling is done, output file shell_start is created. Command ./shell_start starts the Linux shall. Directory of object files of programs that are used in shell is shell/bin
 
 
