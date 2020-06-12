@@ -28,7 +28,7 @@ EXECS=$(SOURCES:%.c=%)
 all: $(EXECS)
 
 #.c.o:
-#	$(CC) $(CFLAGS) $< -o ${OBJDIR}/$@
+#   $(CC) $(CFLAGS) $< -o ${OBJDIR}/$@
 
 $(EXECS): %: %.c
 	$(MKDIR) -p ../bin
